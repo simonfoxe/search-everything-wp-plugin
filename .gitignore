@@ -1,0 +1,4 @@
+.DS_Store
+config.sh*
+se_copy/
+*.zip
