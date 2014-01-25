@@ -5,20 +5,29 @@ Class se_admin {
 //	var $version = '7.0.1';
 
 	function se_admin() {
-
 		// Load language file
 		$locale = get_locale();
+		$meta = wp_se_get_meta();
 		if ( !empty($locale) )
 			load_textdomain('SearchEverything', dirname(__FILE__) .'lang/se-'.$locale.'.mo');
 
-		add_action( 'admin_enqueue_scripts', array(&$this,'register_plugin_styles'));
+		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_styles'));
 		add_action('admin_menu', array(&$this, 'se_add_options_panel'));
+
+
+		if ( isset( $_GET['se_notice'] ) && 0 == $_GET['se_notice'] ) {
+			$meta['show_options_page_notice'] = false;
+			wp_se_update_meta($meta);
+ 		}
+		if ( $meta['show_options_page_notice'] ) {
+ 			add_action( 'all_admin_notices', array( &$this, 'se_options_page_notice' ) );
+ 		}
 	}
 
 	/**
 	 * Register style sheet.
 	 */
-	function register_plugin_styles() {
+	function se_register_plugin_styles() {
 		wp_register_style( 'search-everything', plugins_url() . '/search-everything/css/admin.css' );
 		wp_enqueue_style( 'search-everything' );
 	}
@@ -270,5 +279,23 @@ Class se_admin {
 
 <?php
 	}	//end se_option_page
+
+	 function se_options_page_notice() {
+		 $screen = get_current_screen();
+		 if ( 'settings_page_extend_search' == $screen->id ):
+			$close_url = admin_url( $screen->parent_file );
+			$close_url = add_query_arg( array(
+				 'page' => 'extend_search',
+				 'se_notice' => 0,
+			), $close_url );
+		 ?>
+		 <div class="updated" id="se-top-notice" >
+			<a href="<?php echo $close_url; ?>" style="position: absolute; right: 30px; top: 20px;">Dismiss</a>
+			<h3>Good news everyone!</h3>
+			<p class="about-description">This plugin is <strong>alive</strong> again and we have great plans for it. Stay tuned.</p>
+		 </div>
+		 <?php
+		 endif;
+	}
 }
 ?>
