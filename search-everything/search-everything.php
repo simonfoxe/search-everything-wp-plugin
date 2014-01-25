@@ -38,7 +38,7 @@ class SearchEverything {
 		$this->options = get_option( 'se_options' );
 
 		if ( is_admin() ) {
-			include_once(dirname(__FILE__) . '/views/options.php');
+			include_once(dirname(__FILE__) . '/options.php');
 			$SEAdmin = new se_admin();
 			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
 			if ( basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php" ) {
