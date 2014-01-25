@@ -8,11 +8,6 @@ Author: Zemanta
 Original Author: Dan Cameron of Sprout Venture
 */
 
-/*
- This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 2.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- */
 define('WP_SE_VERSION', '7.0.2');
 define('WP_SE_PLUGIN_FILE', plugin_basename(__FILE__));
 
@@ -35,7 +30,7 @@ class SearchEverything {
 		$this->wp_ver23 = ( $wp_version >= '2.3' );
 		$this->wp_ver25 = ( $wp_version >= '2.5' );
 		$this->wp_ver28 = ( $wp_version >= '2.8' );
-		$this->options = get_option( 'se_options' );
+		$this->options = wp_se_get_options();
 
 		if ( is_admin() ) {
 			include_once(dirname(__FILE__) . '/options.php');
@@ -46,48 +41,48 @@ class SearchEverything {
 			}
 		}
 		//add filters based upon option settings
-		if ( "Yes" == $this->options['se_use_tag_search'] || "Yes" == $this->options['se_use_category_search'] || "Yes" == $this->options['se_use_tax_search'] ) {
+		if ( $this->options['se_use_tag_search'] || $this->options['se_use_category_search'] || $this->options['se_use_tax_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_terms_join' ) );
-			if ( "Yes" == $this->options['se_use_tag_search'] ) {
+			if ( $this->options['se_use_tag_search'] ) {
 				$this->se_log( "searching tags" );
 			}
-			if ( "Yes" == $this->options['se_use_category_search'] ) {
+			if ( $this->options['se_use_category_search'] ) {
 				$this->se_log( "searching categories" );
 			}
-			if ( "Yes" == $this->options['se_use_tax_search'] ) {
+			if ( $this->options['se_use_tax_search'] ) {
 				$this->se_log( "searching custom taxonomies" );
 			}
 		}
 
-		if ( "Yes" == $this->options['se_use_page_search'] ) {
+		if ( $this->options['se_use_page_search'] ) {
 			add_filter( 'posts_where', array( &$this, 'se_search_pages' ) );
 			$this->se_log( "searching pages" );
 		}
 
-		if ( "Yes" == $this->options['se_use_excerpt_search'] ) {
+		if ( $this->options['se_use_excerpt_search'] ) {
 			$this->se_log( "searching excerpts" );
 		}
 
-		if ( "Yes" == $this->options['se_use_comment_search'] ) {
+		if ( $this->options['se_use_comment_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_comments_join' ) );
 			$this->se_log( "searching comments" );
 			// Highlight content
-			if ( "Yes" == $this->options['se_use_highlight'] ) {
+			if ( $this->options['se_use_highlight'] ) {
 				add_filter( 'comment_text', array( &$this, 'se_postfilter' ) );
 			}
 		}
 
-		if ( "Yes" == $this->options['se_use_draft_search'] ) {
+		if ( $this->options['se_use_draft_search'] ) {
 			add_filter( 'posts_where', array( &$this, 'se_search_draft_posts' ) );
 			$this->se_log( "searching drafts" );
 		}
 
-		if ( "Yes" == $this->options['se_use_attachment_search'] ) {
+		if ( $this->options['se_use_attachment_search'] ) {
 			add_filter( 'posts_where', array( &$this, 'se_search_attachments' ) );
 			$this->se_log( "searching attachments" );
 		}
 
-		if ( "Yes" == $this->options['se_use_metadata_search'] ) {
+		if ( $this->options['se_use_metadata_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_search_metadata_join' ) );
 			$this->se_log( "searching metadata" );
 		}
@@ -103,7 +98,7 @@ class SearchEverything {
 			$this->se_log( "searching excluding categories" );
 		}
 
-		if ( "Yes" == $this->options['se_use_authors'] ) {
+		if ( $this->options['se_use_authors'] ) {
 
 			add_filter( 'posts_join', array( &$this, 'se_search_authors_join' ) );
 			$this->se_log( "searching authors" );
@@ -120,7 +115,7 @@ class SearchEverything {
 		add_filter( 'posts_request', array( &$this, 'se_log_query' ), 10, 2 );
 
 		// Highlight content
-		if ( "Yes" == $this->options['se_use_highlight'] ) {
+		if ( $this->options['se_use_highlight'] ) {
 			add_filter( 'the_content', array( &$this, 'se_postfilter' ), 11 );
 			add_filter( 'the_title', array( &$this, 'se_postfilter' ), 11 );
 			add_filter( 'the_excerpt', array( &$this, 'se_postfilter' ), 11 );
@@ -160,22 +155,22 @@ class SearchEverything {
 		$searchQuery = $this->se_search_default();
 
 		//add filters based upon option settings
-		if ( "Yes" == $this->options['se_use_tag_search'] ) {
+		if ( $this->options['se_use_tag_search'] ) {
 			$searchQuery .= $this->se_build_search_tag();
 		}
-		if ( "Yes" == $this->options['se_use_category_search'] || 'Yes' == $this->options['se_use_tax_search'] ) {
+		if ( $this->options['se_use_category_search'] || $this->options['se_use_tax_search'] ) {
 			$searchQuery .= $this->se_build_search_categories();
 		}
-		if ( "Yes" == $this->options['se_use_metadata_search'] ) {
+		if ( $this->options['se_use_metadata_search'] ) {
 			$searchQuery .= $this->se_build_search_metadata();
 		}
-		if ( "Yes" == $this->options['se_use_excerpt_search'] ) {
+		if ( $this->options['se_use_excerpt_search'] ) {
 			$searchQuery .= $this->se_build_search_excerpt();
 		}
-		if ( "Yes" == $this->options['se_use_comment_search'] ) {
+		if ( $this->options['se_use_comment_search'] ) {
 			$searchQuery .= $this->se_build_search_comments();
 		}
-		if ( "Yes" == $this->options['se_use_authors'] ) {
+		if ( $this->options['se_use_authors'] ) {
 			$searchQuery .= $this->se_search_authors();
 		}
 		if ( $searchQuery != '' ) {
@@ -278,7 +273,7 @@ class SearchEverything {
 		if ( !empty( $this->query_instance->query_vars['s'] ) ) {
 
 			$where = str_replace( '"', '\'', $where );
-			if ( 'Yes' == $this->options['se_approved_pages_only'] ) {
+			if ( $this->options['se_approved_pages_only'] ) {
 				$where = str_replace( "post_type = 'post'", " AND 'post_password = '' AND ", $where );
 			} else { // < v 2.1
 				$where = str_replace( 'post_type = \'post\' AND ', '', $where );
@@ -383,7 +378,7 @@ class SearchEverything {
 			}
 			$search = $searchContent;
 			// Building search query on comments author
-			if ( $this->options['se_use_cmt_authors'] == 'Yes' ) {
+			if ( $this->options['se_use_cmt_authors'] ) {
 				$searchand = '';
 				$comment_author = '';
 				foreach ( $search_terms as $term ) {
@@ -401,7 +396,7 @@ class SearchEverything {
 				}
 				$search = "($search) OR ($comment_author)";
 			}
-			if ( 'Yes' == $this->options['se_approved_comments_only'] ) {
+			if ( $this->options['se_approved_comments_only'] ) {
 				$comment_approved = "AND cmt.comment_approved =  '1'";
 				$search = "($search) $comment_approved";
 			}
@@ -630,7 +625,7 @@ class SearchEverything {
 
 			} else {
 
-				if ( 'Yes' == $this->options['se_approved_comments_only'] ) {
+				if ( $this->options['se_approved_comments_only'] ) {
 					$comment_approved = " AND comment_approved =  '1'";
 				} else {
 					$comment_approved = '';
@@ -710,6 +705,7 @@ class SearchEverything {
 	function se_postfilter( $postcontent ) {
 		global $wpdb;
 		$s = $this->query_instance->query_vars['s'];
+
 		// highlighting
 		if ( is_search() && $s != '' ) {
 			$highlight_color = $this->options['se_highlight_color'];

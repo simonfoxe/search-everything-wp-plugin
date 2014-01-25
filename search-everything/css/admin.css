@@ -4,8 +4,9 @@
 .info a { color: #333; text-decoration: none; border-bottom: 1px dotted #333 }
 .info a:hover { color: #666; border-bottom: 1px dotted #666; }
 
-#se-basic-settings,#se-advanced-settings, #se-test-search {margin-top: 20px;}
+#se-basic-settings,#se-advanced-settings, #se-test-search, #se-info {margin-top: 20px;}
 #se-basic-settings .manage-column, #se-advanced-settings .manage-column {font-weight:bold;}
 #se-basic-settings.widefat, #se-advanced-settings.widefat,#se-test-search.widefat, #se-info.widefat {width:60%;}
 /*.widefat th, #se-advanced-settings.widefat th, #se-test-search.widefat th {width:250px; color:red;}*/
 .se-col {width:300px;}
+.se-suboption label { font-size: smaller;margin-left:10px;}
