@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Search Everything
-Plugin URI: https://github.com/sproutventure/search-everything-wordpress-plugin/
+Plugin URI: https://github.com/Zemanta/search-everything-wordpress-plugin/
 Description: Adds search functionality without modifying any template pages: Activate, Configure and Search. Options Include: search highlight, search pages, excerpts, attachments, drafts, comments, tags and custom fields (metadata). Also offers the ability to exclude specific pages and posts. Does not search password-protected content.
-Version: 7.0.1
-Author: Dan Cameron of Sprout Venture
-Author URI: http://sproutventure.com/
+Version: 7.0.2
+Author: Zemanta
+Original Author: Dan Cameron of Sprout Venture
 */
 
 /*
@@ -13,17 +13,10 @@ Author URI: http://sproutventure.com/
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
+define('WP_SE_VERSION', '7.0.2');
+define('WP_SE_PLUGIN_FILE', plugin_basename(__FILE__));
 
-if ( !defined( 'WP_CONTENT_DIR' ) )
-	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-
-if ( !defined( 'DIRECTORY_SEPARATOR' ) ) {
-	if ( strpos( php_uname( 's' ), 'Win' ) !== false )
-		define( 'DIRECTORY_SEPARATOR', '\\' );
-	else
-		define( 'DIRECTORY_SEPARATOR', '/' );
-}
-define( 'SE_ABSPATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
+include_once(dirname(__FILE__) . '/config.php');
 
 $SE = new SearchEverything();
 //add filters based upon option settings
@@ -45,7 +38,7 @@ class SearchEverything {
 		$this->options = get_option( 'se_options' );
 
 		if ( is_admin() ) {
-			include SE_ABSPATH  . 'views/options.php';
+			include_once(dirname(__FILE__) . '/views/options.php');
 			$SEAdmin = new se_admin();
 			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
 			if ( basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php" ) {
@@ -255,7 +248,7 @@ class SearchEverything {
 	function se_log( $msg ) {
 
 		if ( $this->logging ) {
-			$fp = fopen( SE_ABSPATH . "logfile.log", "a+" );
+			$fp = fopen( dirname(__FILE__) . "logfile.log", "a+" );
 			if ( !$fp ) {
 				echo 'unable to write to log file!';
 			}

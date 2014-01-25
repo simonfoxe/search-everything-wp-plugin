@@ -4,6 +4,15 @@ global $wp_se_options, $wp_se_meta;
 $wp_se_options = false;
 $wp_se_meta = false;
 
+
+
+add_action( 'admin_head', 'admin_css' );
+function admin_css()
+{
+	echo '<link rel="stylesheet" type="text/css" href="' . plugins_url('css/options_style.css',__FILE__).'">';
+}
+
+
 function wp_se_get_options() {
 	global $wp_se_options, $wp_se_meta;
 	if($wp_se_options) {
