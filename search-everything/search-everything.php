@@ -8,8 +8,20 @@ Author: Zemanta
 Original Author: Dan Cameron of Sprout Venture
 */
 
-define('WP_SE_VERSION', '7.0.2');
-define('WP_SE_PLUGIN_FILE', plugin_basename(__FILE__));
+define('SE_VERSION', '7.0.2');
+
+if (!defined('SE_PLUGIN_FILE'))
+	define('SE_PLUGIN_FILE', plugin_basename(__FILE__));
+
+if (!defined('SE_PLUGIN_NAME'))
+	define('SE_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));
+
+if (!defined('SE_PLUGIN_DIR'))
+	define('SE_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . SE_PLUGIN_NAME);
+
+if (!defined('SE_PLUGIN_URL'))
+	define('SE_PLUGIN_URL', WP_PLUGIN_URL . '/' . SE_PLUGIN_NAME);
+
 
 include_once(dirname(__FILE__) . '/config.php');
 
@@ -33,7 +45,7 @@ class SearchEverything {
 		$this->options = wp_se_get_options();
 
 		if ( is_admin() ) {
-			include_once(dirname(__FILE__) . '/options.php');
+			include_once(SE_PLUGIN_DIR . '/options.php');
 			$SEAdmin = new se_admin();
 			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
 			if ( basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php" ) {
@@ -243,7 +255,7 @@ class SearchEverything {
 	function se_log( $msg ) {
 
 		if ( $this->logging ) {
-			$fp = fopen( dirname(__FILE__) . "logfile.log", "a+" );
+			$fp = fopen( SE_PLUGIN_DIR. "logfile.log", "a+" );
 			if ( !$fp ) {
 				echo 'unable to write to log file!';
 			}

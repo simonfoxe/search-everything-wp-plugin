@@ -9,7 +9,7 @@ Class se_admin {
 		$locale = get_locale();
 		$meta = wp_se_get_meta();
 		if ( !empty($locale) )
-			load_textdomain('SearchEverything', dirname(__FILE__) .'lang/se-'.$locale.'.mo');
+			load_textdomain('SearchEverything', SE_PLUGIN_DIR .'lang/se-'.$locale.'.mo');
 
 		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_styles'));
 		add_action('admin_menu', array(&$this, 'se_add_options_panel'));
@@ -28,7 +28,7 @@ Class se_admin {
 	 * Register style sheet.
 	 */
 	function se_register_plugin_styles() {
-		wp_register_style( 'search-everything', plugins_url() . '/search-everything/css/admin.css' );
+		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/css/admin.css' );
 		wp_enqueue_style( 'search-everything' );
 	}
 

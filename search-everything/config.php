@@ -128,7 +128,7 @@ function wp_se_migrate_7_0_1() {
 			'se_exclude_categories_list'	=> '',
 			'se_exclude_posts'		=> '',
 			'se_exclude_posts_list'		=> '',
-			'se_highlight_color'		=> 'red',
+			'se_highlight_color'		=> '',
 			'se_highlight_style'		=> ''
 			);
 
