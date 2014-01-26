@@ -105,7 +105,7 @@ function se_migrate_7_0_1() {
 	$old_options = get_option('se_options', false);
 
 	if($old_options) {
-		$new_options = wp_se_get_default_options();
+		$new_options = se_get_default_options();
 
 		$boolean_keys = array(
 			'se_use_page_search'		=> false,
@@ -153,14 +153,14 @@ function se_install() {
 	$se_meta = array(
 		'blog_id' => false,
 		'auth_key' => false,
-		'version' => WP_SE_VERSION,
-		'first_version' => WP_SE_VERSION,
+		'version' => SE_VERSION,
+		'first_version' => SE_VERSION,
 		'new_user' => true,
 		'name' => '',
 		'email' => '',
 		'show_options_page_notice'	=> true
 	);
-	$se_options = wp_se_get_default_options();
+	$se_options = se_get_default_options();
 
 	update_option('se_meta', $se_meta);
 	update_option('se_options', $se_options);
@@ -187,7 +187,7 @@ function se_get_default_options() {
 				'se_use_cmt_authors'		=> false,
 				'se_use_metadata_search'	=> false,
 				'se_use_highlight'		=> false,
-				'se_highlight_color'		=> 'yellow',
+				'se_highlight_color'		=> '',
 				'se_highlight_style'		=> ''
 			);
 
