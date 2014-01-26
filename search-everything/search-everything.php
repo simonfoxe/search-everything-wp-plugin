@@ -314,7 +314,7 @@ class SearchEverything {
 				$search .= "{$searchand}($wpdb->posts.post_excerpt LIKE '{$n}{$term}{$n}')";
 				$searchand = ' AND ';
 			}
-			$sentence_term = $wpdb->escape( $s );
+			$sentence_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 				$search = "($search) OR ($wpdb->posts.post_excerpt LIKE '{$n}{$sentence_term}{$n}')";
 			}
@@ -382,7 +382,7 @@ class SearchEverything {
 				}
 				$searchand = ' AND ';
 			}
-			$sentense_term = $wpdb->escape( $s );
+			$sentense_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentense_term ) {
 				if ( $this->wp_ver23 ) {
 					$searchContent = "($searchContent) OR (cmt.comment_content LIKE '{$n}{$sentense_term}{$n}')";
@@ -400,7 +400,7 @@ class SearchEverything {
 					}
 					$searchand = ' AND ';
 				}
-				$sentence_term = $wpdb->escape( $s );
+				$sentence_term = esc_sql( $s );
 				if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 					if ( $this->wp_ver23 ) {
 						$comment_author = "($comment_author) OR (cmt.comment_author LIKE '{$n}{$sentence_term}{$n}')";
@@ -415,7 +415,7 @@ class SearchEverything {
 			if ( !empty( $search ) )
 				$search = " OR ({$search}) ";
 		}
-		$this->se_log( "comments where: ".$where );
+		//$this->se_log( "comments where: ".$where );
 		$this->se_log( "comments sql: ".$search );
 		return $search;
 	}
@@ -440,7 +440,7 @@ class SearchEverything {
 				}
 				$searchand = ' OR ';
 			}
-			$sentence_term = $wpdb->escape( $s );
+			$sentence_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 				if ( $this->wp_ver23 ) {
 					$search .= " OR (u.display_name LIKE '{$n}{$sentence_term}{$n}')";
@@ -480,7 +480,7 @@ class SearchEverything {
 				}
 				$searchand = ' AND ';
 			}
-			$sentence_term = $wpdb->escape( $s );
+			$sentence_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 				if ( $this->wp_ver23 ) {
 					$search = "($search) OR (m.meta_value LIKE '{$n}{$sentence_term}{$n}')";
@@ -518,7 +518,7 @@ class SearchEverything {
 				}
 				$searchand = ' AND ';
 			}
-			$sentence_term = $wpdb->escape( $s );
+			$sentence_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 				if ( $this->wp_ver23 ) {
 					$search = "($search) OR (tter.name LIKE '{$n}{$sentence_term}{$n}')";
@@ -565,7 +565,7 @@ class SearchEverything {
 				$searchDesc .= "{$searchand}(ttax.description LIKE '{$n}{$term}{$n}')";
 				$searchand = ' AND ';
 			}
-			$sentence_term = $wpdb->escape( $s );
+			$sentence_term = esc_sql( $s );
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
 				$searchDesc = "($searchDesc) OR (ttax.description LIKE '{$n}{$sentence_term}{$n}')";
 			}
