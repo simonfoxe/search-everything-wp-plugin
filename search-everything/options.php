@@ -84,7 +84,8 @@ Class se_admin {
 		?>
 
 	<div class="wrap">
-		<h2><?php _e('Search Everything Version:', 'SearchEverything'); ?> <?php echo $meta['version']?></h2>
+		<h2><?php _e('Search Everything', 'SearchEverything'); ?> <?php echo $meta['version']; ?> - <?php _e('settings','SearchEverything');?></h2>
+		<p><?php _e('Customize your search by checking one or more options below.','SearchEverything'); ?></p>
 		<form method="post">
 			<table id="se-basic-settings" class="widefat">
 				<thead>
