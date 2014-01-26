@@ -22,11 +22,15 @@ if (!defined('SE_PLUGIN_DIR'))
 if (!defined('SE_PLUGIN_URL'))
 	define('SE_PLUGIN_URL', WP_PLUGIN_URL . '/' . SE_PLUGIN_NAME);
 
+include_once(SE_PLUGIN_DIR . '/config.php');
+include_once(SE_PLUGIN_DIR . '/options.php');
 
-include_once(dirname(__FILE__) . '/config.php');
+add_action('wp_loaded','se_initialize_plugin');
 
-$SE = new SearchEverything();
-//add filters based upon option settings
+function se_initialize_plugin() {
+	$SE = new SearchEverything();
+	//add filters based upon option settings
+}
 
 class SearchEverything {
 
@@ -44,14 +48,14 @@ class SearchEverything {
 		$this->wp_ver28 = ( $wp_version >= '2.8' );
 		$this->options = se_get_options();
 
-		if ( is_admin() ) {
-			include_once(SE_PLUGIN_DIR . '/options.php');
+		if ( current_user_can('manage_options') ) {
 			$SEAdmin = new se_admin();
 			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
 			if ( basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php" ) {
 				return true;
 			}
 		}
+
 		//add filters based upon option settings
 		if ( $this->options['se_use_tag_search'] || $this->options['se_use_category_search'] || $this->options['se_use_tax_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_terms_join' ) );
