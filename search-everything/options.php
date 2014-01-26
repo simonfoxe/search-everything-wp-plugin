@@ -7,7 +7,7 @@ Class se_admin {
 	function se_admin() {
 		// Load language file
 		$locale = get_locale();
-		$meta = wp_se_get_meta();
+		$meta = se_get_meta();
 		if ( !empty($locale) )
 			load_textdomain('SearchEverything', SE_PLUGIN_DIR .'lang/se-'.$locale.'.mo');
 
@@ -17,7 +17,7 @@ Class se_admin {
 
 		if ( isset( $_GET['se_notice'] ) && 0 == $_GET['se_notice'] ) {
 			$meta['show_options_page_notice'] = false;
-			wp_se_update_meta($meta);
+			se_update_meta($meta);
  		}
 		if ( $meta['show_options_page_notice'] ) {
  			add_action( 'all_admin_notices', array( &$this, 'se_options_page_notice' ) );
@@ -69,17 +69,17 @@ Class se_admin {
 		if(isset($_POST['action']) && $_POST['action'] == "save") {
 			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', 'SearchEverything') . "</p></div>";
 			//update_option("se_options", $new_options);
-			wp_se_update_options($new_options);
+			se_update_options($new_options);
 		}
 
 		if(isset($_POST['action']) && $_POST['action'] == "reset") {
 			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', 'SearchEverything') . "</p></div>";
-			$default_options = wp_se_get_default_options();
-			wp_se_update_options($default_options);
+			$default_options = se_get_default_options();
+			se_update_options($default_options);
 		}
 
-		$options = wp_se_get_options();
-		$meta = wp_se_get_meta();
+		$options = se_get_options();
+		$meta = se_get_meta();
 
 		?>
 

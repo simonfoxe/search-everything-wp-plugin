@@ -1,94 +1,94 @@
 <?php
 
-global $wp_se_options, $wp_se_meta;
-$wp_se_options = false;
-$wp_se_meta = false;
+global $se_options, $se_meta;
+$se_options = false;
+$se_meta = false;
 
 
-function wp_se_get_options() {
-	global $wp_se_options, $wp_se_meta;
-	if($wp_se_options) {
-		return $wp_se_options;
+function se_get_options() {
+	global $se_options, $se_meta;
+	if($se_options) {
+		return $se_options;
 	}
 
-	$wp_se_options = get_option('se_options', false);
+	$se_options = get_option('se_options', false);
 
-	if(!$wp_se_options || $wp_se_meta['version'] !== WP_SE_VERSION) {
-		wp_se_upgrade();
-		$wp_se_meta = get_option('se_meta');
-		$wp_se_options = get_option('se_options');
+	if(!$se_options || $se_meta['version'] !== SE_VERSION) {
+		se_upgrade();
+		$se_meta = get_option('se_meta');
+		$se_options = get_option('se_options');
 	}
 
-	$wp_se_meta = new ArrayObject($wp_se_meta);
-	$wp_se_options = new ArrayObject($wp_se_options);
+	$se_meta = new ArrayObject($se_meta);
+	$se_options = new ArrayObject($se_options);
 
-	return $wp_se_options;
+	return $se_options;
 }
 
 
-function wp_se_get_meta() {
-	global $wp_se_meta;
+function se_get_meta() {
+	global $se_meta;
 
-	if (!$wp_se_meta) {
-		wp_se_get_options();
+	if (!$se_meta) {
+		se_get_options();
 	}
-	return $wp_se_meta;
+	return $se_meta;
 }
 
-function wp_se_update_meta($new_meta) {
-	global $wp_se_meta;
+function se_update_meta($new_meta) {
+	global $se_meta;
 
 	$new_meta = (array) $new_meta;
 
 	$r = update_option('se_meta', $new_meta);
 
-	if($r && $wp_se_meta !== false) {
-		$wp_se_meta->exchangeArray($new_meta);
+	if($r && $se_meta !== false) {
+		$se_meta->exchangeArray($new_meta);
 	}
 
 	return $r;
 }
 
-function wp_se_update_options($new_options) {
-	global $wp_se_options;
+function se_update_options($new_options) {
+	global $se_options;
 
 	$new_options = (array) $new_options;
 	$r = update_option('se_options', $new_options);
-	if($r && $wp_se_options !== false) {
-		$wp_se_options->exchangeArray($new_options);
+	if($r && $se_options !== false) {
+		$se_options->exchangeArray($new_options);
 	}
 
 	return $r;
 }
 
 //we have to be careful, as previously version was not stored in the options!
-function wp_se_upgrade() {
-	$wp_se_meta = get_option('se_meta', false);
+function se_upgrade() {
+	$se_meta = get_option('se_meta', false);
 	$version = false;
 
-	if($wp_se_meta) {
-		$version = $wp_se_meta['version'];
+	if($se_meta) {
+		$version = $se_meta['version'];
 	}
 
 	if($version) {
-		if(version_compare($version, WP_SE_VERSION, '<')) {
+		if(version_compare($version, SE_VERSION, '<')) {
 			call_user_func('wp_se_migrate_' . str_replace('.', '_', $version));
-			wp_se_upgrade();
+			se_upgrade();
 		}
 	} else {
 		//check if se_options exist
-		$wp_se_options = get_option('se_options', false);
-		if($wp_se_options) {
-			wp_se_migrate_7_0_1(); //existing users don't have version stored in their db
+		$se_options = get_option('se_options', false);
+		if($se_options) {
+			se_migrate_7_0_1(); //existing users don't have version stored in their db
 		} else {
-			wp_se_install();
+			se_install();
 		}
 	}
 }
 
 
-function wp_se_migrate_7_0_1() {
-	$wp_se_meta = array(
+function se_migrate_7_0_1() {
+	$se_meta = array(
 		'blog_id'			=> false,
 		'auth_key'			=> false,
 		'version'			=> '7.0.2',
@@ -99,7 +99,7 @@ function wp_se_migrate_7_0_1() {
 		'show_options_page_notice'	=> false
 	);
 
-	update_option('se_meta',$wp_se_meta);
+	update_option('se_meta',$se_meta);
 
 	//get options and update values to boolean
 	$old_options = get_option('se_options', false);
@@ -138,7 +138,7 @@ function wp_se_migrate_7_0_1() {
 		foreach ($text_keys as $t) {
 			$new_options[$t] = $old_options[$t];
 		}
-		update_option($new_options);
+		update_option('se_options',$new_options);
 	}
 
 	//moved to meta
@@ -149,8 +149,8 @@ function wp_se_migrate_7_0_1() {
 }
 
 
-function wp_se_install() {
-	$wp_se_meta = array(
+function se_install() {
+	$se_meta = array(
 		'blog_id' => false,
 		'auth_key' => false,
 		'version' => WP_SE_VERSION,
@@ -160,15 +160,15 @@ function wp_se_install() {
 		'email' => '',
 		'show_options_page_notice'	=> true
 	);
-	$wp_se_options = wp_se_get_default_options();
+	$se_options = wp_se_get_default_options();
 
-	update_option('se_meta', $wp_se_meta);
-	update_option('se_options', $wp_se_options);
+	update_option('se_meta', $se_meta);
+	update_option('se_options', $se_options);
 
 }
 
-function wp_se_get_default_options() {
-	$wp_se_options = array(
+function se_get_default_options() {
+	$se_options = array(
 				'se_exclude_categories'	=> '',
 				'se_exclude_categories_list' 	=> '',
 				'se_exclude_posts'		=> '',
@@ -191,7 +191,7 @@ function wp_se_get_default_options() {
 				'se_highlight_style'		=> ''
 			);
 
-	return $wp_se_options;
+	return $se_options;
 }
 
 ?>

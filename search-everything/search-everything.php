@@ -42,7 +42,7 @@ class SearchEverything {
 		$this->wp_ver23 = ( $wp_version >= '2.3' );
 		$this->wp_ver25 = ( $wp_version >= '2.5' );
 		$this->wp_ver28 = ( $wp_version >= '2.8' );
-		$this->options = wp_se_get_options();
+		$this->options = se_get_options();
 
 		if ( is_admin() ) {
 			include_once(SE_PLUGIN_DIR . '/options.php');
