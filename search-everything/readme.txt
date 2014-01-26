@@ -1,23 +1,25 @@
 === Plugin Name ===
-Contributors: zemanta, dancameron, sproutventure
+Contributors: zemanta
 Tags: search, search highlight, tag search, category search, category exclusion, comment search, page search, admin, seo, post filter
 Requires at least: 3
 Tested up to: 3.8
 Stable tag: 7.0.2
 
-Increases Wordpress' default search functionality in three easy steps.
+Search Everything increases WordPress' default search functionality in three easy steps.
 
 
 == Update ==
-From Jan 24, 2014 Search Everything will be maintained and developed further by Zemanta.
+From Jan 24, 2014 Search Everything originaly developed by dancameron, sproutventure will be maintained and developed further by Zemanta.
 
 == Description ==
+
+Search Everything improves WordPress default search functionalty by giving you the means to include into search your tags, taxonomies, categories, comments, drafts and more.
 
 = Better WordPress search in three steps =
 
 # Activate
 # Configure options
-# Search ( maybe that's only two steps )
+# Search!
 
 Options include search highlight, searching pages, excerpts, attachments, drafts, comments and custom fields (metadata).
 
