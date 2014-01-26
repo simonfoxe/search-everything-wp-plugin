@@ -6,8 +6,8 @@
 
 #se-basic-settings,#se-advanced-settings, #se-test-search, #se-info {margin-top: 20px;}
 #se-basic-settings .manage-column, #se-advanced-settings .manage-column {font-weight:bold;}
-#se-basic-settings.widefat, #se-advanced-settings.widefat,#se-test-search.widefat, #se-info.widefat {width:60%;}
-.se-col {width:300px;}
+#se-basic-settings.widefat, #se-advanced-settings.widefat,#se-test-search.widefat, #se-info.widefat {width:80%;}
+.se-col {width:350px;}
 .se-suboption label { font-size: smaller;margin-left:10px; color:#666;}
 
 #se-top-notice {width:80%; position:relative;}
