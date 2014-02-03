@@ -17,12 +17,12 @@ cat > $SCRIPT_DIR/config.sh <<EOF
 # The URL of the testing WordPress installation
 WP_URL="http://localhost/wp"
 # This plugin's directory of the testing WordPress instalation, where this plugin is installed to.
-WP_PLUGIN_DIR="/var/www/localhost/wp/wp-content/plugins/wordpress-23-related-posts-plugin"
+WP_PLUGIN_DIR="/var/www/localhost/wp/wp-content/plugins/search-everything"
 # You can also use the deploy.sh script to deploy to multiple WordPress installations, using:
 	#WP_URL=("http://localhost/wp1" "http://localhost/wp2")
 	#WP_PLUGIN_DIR=(
-	#	"/var/www/localhost/wp1/wp-content/plugins/wordpress-23-related-posts-plugin"
-	#	"/var/www/localhost/wp2/wp-content/plugins/wordpress-23-related-posts-plugin"
+	#	"/var/www/localhost/wp1/wp-content/plugins/search-everything"
+	#	"/var/www/localhost/wp2/wp-content/plugins/search-everything"
 	#)
 EOF
 
