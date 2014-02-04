@@ -206,29 +206,35 @@ class SearchEverything {
 	// search for terms in default locations like title and content
 	// replacing the old search terms seems to be the best way to
 	// avoid issue with multiple terms
-	function se_search_default() {
+	function se_search_default(){ 
 
 		global $wpdb;
 
-		$n = ( isset( $this->query_instance->query_vars['exact'] ) && $this->query_instance->query_vars['exact'] ) ? '' : '%';
-		$search = '';
+		$not_exact = empty($this->query_instance->query_vars['exact']);
+		$search_sql_query = '';
 		$seperator = '';
 		$terms = $this->se_get_search_terms();
 
 		// if it's not a sentance add other terms
-		$search .= '(';
+		$search_sql_query .= '(';
 		foreach ( $terms as $term ) {
-			$search .= $seperator;
+			$search_sql_query .= $seperator;
 
+			$esc_term = esc_sql($term);
+			if ($not_exact) {
+				$esc_term = "%$esc_term%";
+			}
 
-			$search .= sprintf( "((%s.post_title LIKE '%s%s%s') OR (%s.post_content LIKE '%s%s%s'))", $wpdb->posts, $n, $term, $n, $wpdb->posts, $n, $term, $n );
-
+			$like_title = "($wpdb->posts.post_title LIKE '$esc_term')";
+			$like_post = "($wpdb->posts.post_content LIKE '$esc_term')";
+			
+			$search_sql_query .= "($like_title OR $like_post)";
 
 			$seperator = ' AND ';
 		}
 
-		$search .= ')';
-		return $search;
+		$search_sql_query .= ')';
+		return $search_sql_query;
 	}
 
 	// Exclude post revisions
