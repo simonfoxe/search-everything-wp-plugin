@@ -43,23 +43,51 @@ class SearchEverything {
 	var $wp_ver23;
 	var $wp_ver25;
 	var $wp_ver28;
+	var $ajax_request;
 	private $query_instance;
 
-	function SearchEverything() {
+	function SearchEverything($ajax_query=false) {
 		global $wp_version;
 		$this->wp_ver23 = ( $wp_version >= '2.3' );
 		$this->wp_ver25 = ( $wp_version >= '2.5' );
 		$this->wp_ver28 = ( $wp_version >= '2.8' );
+		$this->ajax_request = $ajax_query ? true : false;
 		$this->options = se_get_options();
 
+		if ($this->ajax_request) {
+			$this->init_ajax($ajax_query);
+		}
+		else {
+			$this->init();
+		}		
+	}
+
+	function init_ajax($query) {
+		
+		
+		$this->search_hooks();
+	}
+
+	function init() {
 		if ( current_user_can('manage_options') ) {
 			$SEAdmin = new se_admin();
 			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
-			if ( basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php" ) {
+			if (basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php") {
 				return true;
 			}
 		}
 
+		$this->search_hooks();
+
+		// Highlight content
+		if ( $this->options['se_use_highlight'] ) {
+			add_filter( 'the_content', array( &$this, 'se_postfilter' ), 11 );
+			add_filter( 'the_title', array( &$this, 'se_postfilter' ), 11 );
+			add_filter( 'the_excerpt', array( &$this, 'se_postfilter' ), 11 );
+		}
+	}
+
+	function search_hooks() {
 		//add filters based upon option settings
 		if ( $this->options['se_use_tag_search'] || $this->options['se_use_category_search'] || $this->options['se_use_tax_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_terms_join' ) );
@@ -133,15 +161,7 @@ class SearchEverything {
 		add_filter( 'posts_where', array( &$this, 'se_no_future' ) );
 
 		add_filter( 'posts_request', array( &$this, 'se_log_query' ), 10, 2 );
-
-		// Highlight content
-		if ( $this->options['se_use_highlight'] ) {
-			add_filter( 'the_content', array( &$this, 'se_postfilter' ), 11 );
-			add_filter( 'the_title', array( &$this, 'se_postfilter' ), 11 );
-			add_filter( 'the_excerpt', array( &$this, 'se_postfilter' ), 11 );
-		}
 	}
-
 
 	// creates the list of search keywords from the 's' parameters.
 	function se_get_search_terms() {
@@ -166,7 +186,7 @@ class SearchEverything {
 	// add where clause to the search query
 	function se_search_where( $where, $wp_query ) {
 
-		if ( !$wp_query->is_search() )
+		if ( !$wp_query->is_search() && !$this->ajax_request)
 			return $where;
 
 		$this->query_instance = &$wp_query;
@@ -515,7 +535,7 @@ class SearchEverything {
 	function se_build_search_tag() {
 		global $wpdb;
 		$vars = $this->query_instance->query_vars;
-		
+
 		$s = $vars['s'];
 		$search_terms = $this->se_get_search_terms();
 		$exact = isset( $vars['exact'] ) ? $vars['exact'] : '';
@@ -764,3 +784,33 @@ class SearchEverything {
 		return $query;
 	}// se_log_query
 } // END
+
+add_action('wp_ajax_search_everything', 'search_everything_callback');
+
+function search_everything_callback() {
+	$is_query = !empty($_GET['s']);
+
+	$result = array();
+	if ($is_query) {
+		$SE = new SearchEverything(true);
+
+		$params = array(
+			's' => $_GET['s']
+		);
+		if (!empty($_GET['exact'])) {
+			$params['exact'] = true;
+		}
+
+		$post_query = new WP_query($params);
+
+		while ( $post_query->have_posts() ) {
+			$post_query->the_post();
+
+			$result[] = get_post();
+		}
+		$post_query->reset_postdata();
+		
+	}
+	print json_encode($result);	
+	die();
+}
