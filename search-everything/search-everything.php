@@ -32,6 +32,10 @@ function se_initialize_plugin() {
 	//add filters based upon option settings
 }
 
+function se_get_view($view) {
+	return SE_PLUGIN_DIR . "/views/$view.php";
+}
+
 class SearchEverything {
 
 	var $logging = false;
