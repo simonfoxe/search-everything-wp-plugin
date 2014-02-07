@@ -760,5 +760,3 @@ class SearchEverything {
 		return $query;
 	}// se_log_query
 } // END
-
-?>

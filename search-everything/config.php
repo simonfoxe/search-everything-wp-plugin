@@ -193,5 +193,3 @@ function se_get_default_options() {
 
 	return $se_options;
 }
-
-?>
