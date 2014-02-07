@@ -3,3 +3,4 @@
 	<h3>Good news everyone!</h3>
 	<p class="about-description">This plugin is <strong>alive</strong> again and we have great plans for it. Stay tuned.</p>
 </div>
+
