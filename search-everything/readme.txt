@@ -102,3 +102,4 @@ Please open a new issue at [github Issues](https://github.com/zemanta/search-eve
 * Added config file with installation and migration functions
 * Refactored code, removed Yes options
 * Replaced deprecated functions
+

@@ -2,8 +2,6 @@
 
 Class se_admin {
 
-//	var $version = '7.0.1';
-
 	function se_admin() {
 		// Load language file
 		$locale = get_locale();
@@ -37,7 +35,7 @@ Class se_admin {
 	function se_add_options_panel() {
 		add_options_page('Search', 'Search Everything', 'manage_options', 'extend_search', array(&$this, 'se_option_page'));
 	}
-	
+
 
 	//build admin interface
 	function se_option_page() {

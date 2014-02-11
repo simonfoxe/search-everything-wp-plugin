@@ -72,7 +72,7 @@ function se_upgrade() {
 
 	if($version) {
 		if(version_compare($version, SE_VERSION, '<')) {
-			call_user_func('wp_se_migrate_' . str_replace('.', '_', $version));
+			call_user_func('se_migrate_' . str_replace('.', '_', $version));
 			se_upgrade();
 		}
 	} else {
