@@ -2,30 +2,29 @@
 Contributors: zemanta
 Tags: search, search highlight, tag search, category search, category exclusion, comment search, page search, admin, seo, post filter
 Requires at least: 3
-Tested up to: 3.8
-Stable tag: 7.0.2
+Tested up to: 3.8.1
+Stable tag: 7.0.3
 
 Search Everything increases WordPress' default search functionality in three easy steps.
 
 
 == Update ==
+
 From Jan 24, 2014 Search Everything originaly developed by dancameron, sproutventure will be maintained and developed further by Zemanta.
 
 == Description ==
 
-Search Everything improves WordPress default search functionalty by giving you the means to include into search your tags, taxonomies, categories, comments, drafts and more.
+Search Everything improves WordPress default search functionality without modifying any of the template pages. You can configure it to search pages, excerpts, attachments, drafts, comments, tags and custom fields (metadata) and you can specify your own search highlight style. It also offers the ability to exclude specific pages and posts. It does not search password-protected content. Simply install, configure... and search.
 
 = Better WordPress search in three steps =
 
-# Activate
-# Configure options
-# Search!
-
-Options include search highlight, searching pages, excerpts, attachments, drafts, comments and custom fields (metadata).
+* Activate
+* Configure options
+* Search!
 
 = What it does: =
 
-Search Everything increases the ability of the default Wordpress Search, options included:
+Search Everything increases the ability of the default Wordpress Search, options include:
 
 * Search Highlighting
 * Search Every Page
@@ -57,15 +56,11 @@ Installation Instructions:
 
 = It doesn't work =
 
-Read the installation guide.
-
-= Where is feature x? =
-
-[github Issues](https://github.com/sproutventure/search-everything-wordpress-plugin/issues "Github Issues"). Label it as a "feature-request"
+Read the installation guide. 
 
 = It *still* doesn't work (and you're certain there's a bug) =
 
-[github Issues](https://github.com/sproutventure/search-everything-wordpress-plugin/issues "Github Issues")
+Please open a new issue at [github Issues](https://github.com/zemanta/search-everything-wordpress-plugin/issues "Github Issues")
 
 = What Translations are included? =
 
@@ -93,10 +88,17 @@ Read the installation guide.
 
 1. Screenshot of the options panel
 
-== Help ==
 
-Send me your pull requests on [github](https://github.com/sproutventure/search-everything-wordpress-plugin "github")
 
-== Support ==
+== Changelog ==
 
-[github Issues](https://github.com/sproutventure/search-everything-wordpress-plugin/issues "Github Issues")
+= 7.0.3 =
+* Fixed vulnerability issue in se_search_default and started escaping terms
+* Refactored code, extracted html from PHP code
+* Added support for ajax call
+
+
+= 7.0.2 =
+* Added config file with installation and migration functions
+* Refactored code, removed Yes options
+* Replaced deprecated functions

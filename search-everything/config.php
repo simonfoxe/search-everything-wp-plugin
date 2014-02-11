@@ -87,6 +87,17 @@ function se_upgrade() {
 }
 
 
+function se_migrate_7_0_2() {
+
+	$se_meta = get_option('se_meta', false);
+
+	if ($se_meta) {
+		$se_meta['version'] = '7.0.3';
+	}
+	update_option('se_meta',$se_meta);
+}
+
+
 function se_migrate_7_0_1() {
 	$se_meta = array(
 		'blog_id'			=> false,
