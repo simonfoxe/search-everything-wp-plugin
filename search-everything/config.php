@@ -86,6 +86,16 @@ function se_upgrade() {
 	}
 }
 
+function se_migrate_7_0_3() {
+
+	$se_meta = get_option('se_meta', false);
+
+	if ($se_meta) {
+		$se_meta['version'] = '7.0.4';
+	}
+	update_option('se_meta',$se_meta);
+}
+
 
 function se_migrate_7_0_2() {
 

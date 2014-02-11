@@ -3,7 +3,7 @@ Contributors: zemanta
 Tags: search, search highlight, tag search, category search, category exclusion, comment search, page search, admin, seo, post filter
 Requires at least: 3
 Tested up to: 3.8.1
-Stable tag: 7.0.3
+Stable tag: 7.0.4
 
 Search Everything increases WordPress' default search functionality in three easy steps.
 
@@ -91,6 +91,9 @@ Please open a new issue at [github Issues](https://github.com/zemanta/search-eve
 
 
 == Changelog ==
+
+= 7.0.4 =
+* Urgent bugfix - changed migration script
 
 = 7.0.3 =
 * Fixed vulnerability issue in se_search_default and started escaping terms
