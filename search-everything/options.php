@@ -51,10 +51,11 @@ Class se_admin {
 		wp_nonce_field( 'se-meta-box-nonce', 'meta_box_nonce' );
 		?>
 		<p>
-			<label for="se-meta-box-text">Do your re-search</label>
+			<label for="se-meta-box-text">I want to know more about:</label>
 			<input type="text" name="se-meta-box-text" id="se-meta-box-text" value="<?php echo $text; ?>" />
-			<input id="se-meta-search-button" type="button" value="Digg in!" class="button button-info"/>
+			<input id="se-meta-search-button" type="button" value="Search" class="button button-info"/>
 		</p>
+		<div id="se-meta-box-results"></div>
 		<?php	
 	}
 
