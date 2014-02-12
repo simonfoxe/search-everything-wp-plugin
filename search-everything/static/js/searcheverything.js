@@ -1,24 +1,64 @@
-(function ($) {
-	var research_topic = function () {
-	
-		$('#se-meta-search-button').on('click', function () {
-			var meta_box_results = $('#se-meta-box-results');
-			var search_term = $('#se-meta-box-text').val();
-			var search_results = 'We found: <ul><li><strong>3 posts</strong> from your blog';
-			search_results += '<ul class="se-results-sublevel"><li><a class="se-result-title" href="#">Post #1 title</a><span class="se-result-desc">Short description <strong>' + search_term +'</strong></span></li>';
-			search_results += '<li><a class="se-result-title" href="#">Post #2 title</a><span class="se-result-desc">Short <strong>' + search_term + '</strong> description </span></li>';
-			search_results += '<li><a class="se-result-title" href="#">Post #3 title</a><span class="se-result-desc">Short description 3 <strong>' + search_term + '</strong></span></li>';
-			search_results += '</ul>';
-			search_results += '</li><li><strong>0 pages</strong> from your blog<ul class="se-results-sublevel"></ul></li>';
-			search_results += '<li><strong>4 related posts </strong>from other publishers';
-			search_results += '<ul class="se-results-sublevel"><li><a class="se-result-title" href="#">Post #1 title</a><span class="se-result-desc">Short description <strong>' + search_term +'</strong></span></li>';
-			search_results += '</li></ul>';
+var SearchEverything = (function ($) {
+	var r = {
+			resizeSearchInput: function () {
+				var input = $('#se-metabox-text');
 
-			//clear results
-			meta_box_results.empty();
-			meta_box_results.append(search_results);
-		});
-	}
+				input.css({
+					'width': input.closest('div').outerWidth(true) - input.next('a').outerWidth(true)
+				});
+			},
+			handleWindowResize: function () {
+				$(window).resize(r.resizeSearchInput);
+			},
+			handleMetaboxMove: function () {
+				$('.meta-box-sortables').on('sortstop', function (event, ui) {
+					if (ui.item && ui.item.length && ui.item[0].id === 'se-metabox') {
+						r.resizeSearchInput();
+					}
+				});
+			},
+			performLocalSearch: function () {
+				var input = $('#se-metabox-text');
 
-	$(research_topic);
+				$.ajax({
+					url: input.data('ajaxurl'),
+					method: 'get',
+					dataType: "json",
+					data: {
+						'action': 'wp_ajax_search_everything',
+						's': input.prop('value') || ''
+					},
+					success: function (data) {
+						console.log(data);
+					}
+				})
+			},
+			handleSearch: function () {
+				$('#se-metabox-text').on('keypress', function (ev) {
+					if (13 === ev.which) {
+						ev.preventDefault(); // Don't actually post... that'd be silly
+						r.performLocalSearch();
+					}
+				});
+
+				$('#se-metabox-search').on('click', function (ev) {
+					ev.preventDefault(); // Don't actually go to another page, that would really screw things up
+					r.performLocalSearch();
+				});
+			}
+		},
+		u = {
+			initialize: function () {
+				r.resizeSearchInput();
+				r.handleWindowResize();
+				r.handleMetaboxMove();
+				r.handleSearch();
+
+				return this;
+			}
+		};
+	return u;
 }(jQuery));
+jQuery(function () {
+	SearchEverything.initialize();
+});

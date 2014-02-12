@@ -28,6 +28,8 @@ Class se_admin {
 	function se_register_plugin_scripts_and_styles() {
 		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/static/css/admin.css' );
 		wp_enqueue_style( 'search-everything' );
+		wp_register_style( 'search-everything-compose', SE_PLUGIN_URL . '/static/css/se-compose.css' );
+		wp_enqueue_style( 'search-everything-compose' );
 
 		wp_register_script( 'search-everything', SE_PLUGIN_URL . '/static/js/searcheverything.js');
 		wp_enqueue_script('search-everything');
@@ -39,29 +41,24 @@ Class se_admin {
 	* Add metabox for search widget on editor
 	*/
 
-	function se_meta_box_add()
-	{
-		add_meta_box( 'se-meta-box-id', 'Re-Search Everything', array(&$this,'se_meta_box_cb'), 'post', 'normal', 'high' );
+	function se_meta_box_add() {
+		add_meta_box( 'se-metabox', 'Re-Search Everything', array(&$this,'se_meta_box_cb'), 'post', 'side', 'high' );
 	}
 
-	function se_meta_box_cb( $post )
-	{
-		$values = get_post_custom( $post->ID );
-		$text = isset( $values['se-meta-box-text'] ) ? esc_attr( $values['se-meta-box-text'][0] ) : '';
-		wp_nonce_field( 'se-meta-box-nonce', 'meta_box_nonce' );
+	function se_meta_box_cb($post) {
+		$values = get_post_custom($post->ID);
+		$text = isset($values['se-meta-box-text']) ? esc_attr($values['se-meta-box-text'][0]) : '';
+		wp_nonce_field('se-meta-box-nonce', 'meta_box_nonce');
 		?>
-		<p>
-			<label for="se-meta-box-text">I want to know more about:</label>
-			<input type="text" name="se-meta-box-text" id="se-meta-box-text" value="<?php echo $text; ?>" />
-			<input id="se-meta-search-button" type="button" value="Search" class="button button-info"/>
-		</p>
-		<div id="se-meta-box-results"></div>
+		<div id="se-metabox-form">
+			<input data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>" type="search" placeholder="Search interesting stuff" name="se-metabox-text" id="se-metabox-text" value="" />
+			<a id="se-metabox-search">Search</a>
+		</div>
 		<?php	
 	}
 
 
-	function se_meta_box_search( $post_id )
-	{
+	function se_meta_box_search($post_id) {
 		// Bail if we're doing an auto save
 		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 		

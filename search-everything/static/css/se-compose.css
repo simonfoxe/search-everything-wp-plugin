@@ -1,0 +1,5 @@
+#se-metabox .inside {margin:0;padding:0;}
+
+#se-metabox-form {letter-spacing:-4px;}
+#se-metabox-form input {display:inline-block;letter-spacing:normal;word-spacing:normal;padding:5px 3px;margin:0;border:none;vertical-align:top;}
+#se-metabox-form a {text-indent:-9999em;background:transparent url(../img/search.png) -2px -3px no-repeat;display:inline-block;vertical-align:top;letter-spacing:normal;word-spacing:normal;width:20px;height:25px;}

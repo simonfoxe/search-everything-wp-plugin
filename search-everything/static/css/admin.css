@@ -12,9 +12,3 @@
 
 #se-top-notice {width:80%; position:relative;}
 #se-top-notice .updated {margin:0;}
-
-/* Re-search results */
-.se-results-sublevel {border-top: 1px solid #ccc;}
-.se-results-sublevel li {padding: 3px;}
-.se-result-title {display: block; font-weight:bold;}
-.se-result-desc {display: block; color:#999;}
