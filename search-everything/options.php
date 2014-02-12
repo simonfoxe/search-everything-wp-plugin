@@ -9,9 +9,9 @@ Class se_admin {
 		if ( !empty($locale) )
 			load_textdomain('SearchEverything', SE_PLUGIN_DIR .'lang/se-'.$locale.'.mo');
 
-		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_styles'));
-		add_action('admin_menu', array(&$this, 'se_add_options_panel'));
-
+		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_scripts_and_styles'));
+		add_action( 'admin_menu', array(&$this, 'se_add_options_panel'));
+		add_action( 'add_meta_boxes', array(&$this,'se_meta_box_add' ));
 
 		if ( isset( $_GET['se_notice'] ) && 0 == $_GET['se_notice'] ) {
 			$meta['show_options_page_notice'] = false;
@@ -25,11 +25,53 @@ Class se_admin {
 	/**
 	 * Register style sheet.
 	 */
-	function se_register_plugin_styles() {
-		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/css/admin.css' );
+	function se_register_plugin_scripts_and_styles() {
+		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/static/css/admin.css' );
 		wp_enqueue_style( 'search-everything' );
+
+		wp_register_script( 'search-everything', SE_PLUGIN_URL . '/static/js/searcheverything.js');
+		wp_enqueue_script('search-everything');
 	}
 
+
+
+	/*
+	* Add metabox for search widget on editor
+	*/
+
+	function se_meta_box_add()
+	{
+		add_meta_box( 'se-meta-box-id', 'Re-Search Everything', array(&$this,'se_meta_box_cb'), 'post', 'normal', 'high' );
+	}
+
+	function se_meta_box_cb( $post )
+	{
+		$values = get_post_custom( $post->ID );
+		$text = isset( $values['se-meta-box-text'] ) ? esc_attr( $values['se-meta-box-text'][0] ) : '';
+		wp_nonce_field( 'se-meta-box-nonce', 'meta_box_nonce' );
+		?>
+		<p>
+			<label for="se-meta-box-text">Do your re-search</label>
+			<input type="text" name="se-meta-box-text" id="se-meta-box-text" value="<?php echo $text; ?>" />
+			<input id="se-meta-search-button" type="button" value="Digg in!" class="button button-info"/>
+		</p>
+		<?php	
+	}
+
+
+	function se_meta_box_search( $post_id )
+	{
+		// Bail if we're doing an auto save
+		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+		
+		// if our nonce isn't there, or we can't verify it, bail
+		if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'se-meta-box-nonce' ) ) return;
+		
+		// if our current user can't edit this post, bail
+		if( !current_user_can( 'edit_post' ) ) return;
+		
+
+	}
 
 
 	function se_add_options_panel() {
