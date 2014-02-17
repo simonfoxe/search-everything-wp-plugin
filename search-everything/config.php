@@ -86,6 +86,27 @@ function se_upgrade() {
 	}
 }
 
+function se_migrate_7_0_4() {
+	$se_meta = get_option('se_meta', false);
+
+	if ($se_meta) {
+		$se_meta['version'] = '8.0';
+	}
+
+	$se_options = get_option('se_options', false);
+
+	//enable external search
+	$se_options['research_widget'] = array (
+		'visible_on_compose'		=> true,
+		'external_search_enabled'	=> false,
+		'notice_visible'			=> true,
+		);
+
+	update_option('se_meta',$se_meta);
+	update_option('se_options',$se_meta);
+
+}
+
 function se_migrate_7_0_3() {
 
 	$se_meta = get_option('se_meta', false);
@@ -173,6 +194,7 @@ function se_migrate_7_0_1() {
 function se_install() {
 	$se_meta = array(
 		'blog_id' => false,
+		'api_key' => '',
 		'auth_key' => false,
 		'version' => SE_VERSION,
 		'first_version' => SE_VERSION,
@@ -209,8 +231,14 @@ function se_get_default_options() {
 				'se_use_metadata_search'	=> false,
 				'se_use_highlight'		=> false,
 				'se_highlight_color'		=> '',
-				'se_highlight_style'		=> ''
+				'se_highlight_style'		=> '',
+				'research_widget'		 	=> array (
+					'visible_on_compose'		=> true,
+					'external_search_enabled'	=> false,
+					'notice_visible'			=> true
+				)
 			);
 
 	return $se_options;
 }
+
