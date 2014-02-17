@@ -28,6 +28,9 @@ Class se_admin {
 	function se_register_plugin_scripts_and_styles() {
 		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/static/css/admin.css' );
 		wp_enqueue_style( 'search-everything' );
+
+		add_editor_style(SE_PLUGIN_URL . '/static/css/se-styles.css');
+
 		wp_register_style( 'search-everything-compose', SE_PLUGIN_URL . '/static/css/se-compose.css' );
 		wp_enqueue_style( 'search-everything-compose' );
 
