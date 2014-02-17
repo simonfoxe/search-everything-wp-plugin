@@ -787,7 +787,6 @@ add_action('wp_ajax_search_everything', 'search_everything_callback');
 
 function search_everything_callback() {
 	$is_query = !empty($_GET['s']);
-	trigger_error('hasan');
 
 	$result = array();
 	if ($is_query) {
@@ -804,14 +803,12 @@ function search_everything_callback() {
 
 		while ( $post_query->have_posts() ) {
 			$post_query->the_post();
-			trigger_error(serialize(get_post()));
 
 			$result[] = get_post();
 		}
 		$post_query->reset_postdata();
 		
 	}
-	trigger_error(serialize($result));
 	print json_encode($result);	
 	die();
 }

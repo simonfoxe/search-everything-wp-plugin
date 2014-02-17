@@ -7,15 +7,16 @@
 #se-metabox-results {border-top:1px solid #dfdfdf;}
 #se-metabox-results .se-spinner {margin:20px auto;width:32px;height:32px;background:transparent url(../img/ajax-loader.gif) top left no-repeat;}
 #se-metabox-results .se-no-results {margin:10px auto;text-align:center;}
-#se-metabox-results #se-metabox-own-results {display:none;}
-#se-metabox-results #se-metabox-own-results h4 {font-size:14px;margin:10px 0 0 7px;}
-#se-metabox-results #se-metabox-own-results ul {letter-spacing:-4px;margin:0;}
-#se-metabox-results #se-metabox-own-results ul li {cursor:pointer;width:200px;margin:5px;border:1px solid #dfdfdf;padding:5px;display:inline-block;background:#fff;letter-spacing:normal;word-spacing:normal;-webkit-box-shadow: inset 0 1px 0 #fff;box-shadow:inset 0 1px 0 #fff;-webkit-border-radius:3px;border-radius:3px;}
-#se-metabox-results #se-metabox-own-results ul li a {display:block;}
-#se-metabox-results #se-metabox-own-results ul li a h6 {font-size:12px;font-weight:bold;margin:0 0 5px 0;}
-#se-metabox-results #se-metabox-own-results ul li a p {font-size:12px;line-height:15px;margin:0;}
+#se-metabox-results .se-metabox-results-list {display:none;}
+#se-metabox-results .se-metabox-results-list h4 {font-size:14px;margin:10px 0 0 7px;}
+#se-metabox-results .se-metabox-results-list ul {letter-spacing:-4px;margin:0;}
+#se-metabox-results .se-metabox-results-list ul li {cursor:pointer;width:200px;margin:5px;border:1px solid #dfdfdf;padding:5px;display:inline-block;background:#fff;letter-spacing:normal;word-spacing:normal;-webkit-box-shadow: inset 0 1px 0 #fff;box-shadow:inset 0 1px 0 #fff;-webkit-border-radius:3px;border-radius:3px;}
+#se-metabox-results .se-metabox-results-list ul li a {display:block;}
+#se-metabox-results .se-metabox-results-list ul li a h6 {font-size:12px;font-weight:bold;margin:0 0 5px 0;}
+#se-metabox-results .se-metabox-results-list ul li a p {font-size:12px;line-height:15px;margin:0;}
+#se-metabox-results .se-metabox-results-list p {margin:10px 5px;}
 
 #postbox-container-1 #se-metabox-results .se-no-results {margin:10px;text-align:left;}
-#postbox-container-1 #se-metabox-results #se-metabox-own-results {display:none;}
-#postbox-container-1 #se-metabox-results #se-metabox-own-results h4 {font-size:14px;margin:5px 0 0 5px;}
-#postbox-container-1 #se-metabox-results #se-metabox-own-results ul li {display:block;margin:5px;width:auto;}
+#postbox-container-1 #se-metabox-results .se-metabox-results-list {display:none;}
+#postbox-container-1 #se-metabox-results .se-metabox-results-list h4 {font-size:14px;margin:5px 0 0 5px;}
+#postbox-container-1 #se-metabox-results .se-metabox-results-list ul li {display:block;margin:5px;width:auto;}

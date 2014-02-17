@@ -21,6 +21,9 @@ var SearchEverything = (function ($) {
 			displayResults: function (holder, data) {
 				$.each(data, function (i, result) {
 					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
+					if (i > 4) {
+						return;
+					}
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
@@ -31,31 +34,37 @@ var SearchEverything = (function ($) {
 			},
 			performSearch: function () {
 				var input = $('#se-metabox-text'),
-					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results"><h4>Results from your blog</h4><ul></ul></div><div class="se-spinner"></div></div>');
+					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>');
 
 				$('#se-metabox-results').remove();
 				input.closest('div').after(results);
 
-				$.ajax({
-					url: input.data('ajaxurl'),
-					method: 'get',
-					dataType: "json",
-					data: {
-						action: 'search_everything',
-						s: input.prop('value') || ''
-					},
-					success: function (data) {
-						var results = $('#se-metabox-own-results'),
-							resultsList = results.find('ul');
-						$('.se-spinner, .se-no-results').remove();
-						if (data.length === 0) {
-							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
-						} else {
-							results.show();
-							r.displayResults(resultsList, data);
+				if (!window.ZemantaAPIKey) {
+					$.ajax({
+						url: input.data('ajaxurl'),
+						method: 'get',
+						dataType: "json",
+						data: {
+							action: 'search_everything',
+							s: input.prop('value') || ''
+						},
+						success: function (data) {
+							var results = $('#se-metabox-own-results'),
+								resultsList = results.find('ul');
+
+							results.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
+							$('#se-metabox-own-powersearch').show();
+
+							$('.se-spinner, .se-no-results').remove();
+							if (data.length === 0) {
+								$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
+							} else {
+								results.show();
+								r.displayResults(resultsList, data);
+							}
 						}
-					}
-				})
+					});
+				}
 			},
 			urlDomain: function (url) { // http://stackoverflow.com/a/8498668
 				var a = document.createElement('a');
@@ -87,10 +96,10 @@ var SearchEverything = (function ($) {
 								'<a target="_blank" class="se-box">' +
 									'<span class="se-box-heading">' +
 										'<span class="se-box-heading-title"></span>' +
-										'<span class="se-box-heading-domain"></span>' +
 									'</span>' +
 									'<span class="se-box-text"></span>' +
 									'<span class="se-box-date"></span>' +
+									'<span class="se-box-domain"></span>' +
 								'</a>' +
 							'</p>' +
 						'</div>'),
@@ -107,8 +116,6 @@ var SearchEverything = (function ($) {
 					html.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
 					html.find('.se-box-date').text(date);
 					html.find('.se-box').attr('href', listItem.data('guid'));
-
-					console.log(listItem.data());
 
 					if (send_to_editor) {
 						send_to_editor(html.html());
