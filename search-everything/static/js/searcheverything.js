@@ -53,7 +53,7 @@ var SearchEverything = (function ($) {
 							ownResultsList = ownResults.find('ul'),
 							externalResults = $('#se-metabox-own-results'),
 							externalResultsList = ownResults.find('ul');
-						if (!window.ExternalSearchEnabled) {
+						if (!window.externalSearchEnabled) {
 							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
 						} else {
