@@ -22,6 +22,13 @@ if (!defined('SE_PLUGIN_DIR'))
 if (!defined('SE_PLUGIN_URL'))
 	define('SE_PLUGIN_URL', WP_PLUGIN_URL . '/' . SE_PLUGIN_NAME);
 
+if (!defined('SE_ZEMANTA_API_GATEWAY'))
+	define('SE_ZEMANTA_API_GATEWAY', 'http://api.zemanta.com/services/rest/0.0/');
+
+if (!defined('SE_ZEMANTA_DASHBOARD'))
+	define('SE_ZEMANTA_DASHBOARD_URL', 'http://blogmind.zemanta.com/');
+
+
 include_once(SE_PLUGIN_DIR . '/config.php');
 include_once(SE_PLUGIN_DIR . '/options.php');
 
@@ -31,8 +38,8 @@ function se_initialize_plugin() {
 	$SE = new SearchEverything();
 	
 	//add filters based upon option settings
-	include_once(SE_PLUGIN_DIR . '/zemanta/zemanta.php');
-	$se_zemanta = new SEZemanta();
+	//include_once(SE_PLUGIN_DIR . '/zemanta/zemanta.php');
+	//$se_zemanta = new SEZemanta();
 }
 
 function se_get_view($view) {

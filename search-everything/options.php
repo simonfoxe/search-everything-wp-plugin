@@ -104,8 +104,11 @@ Class se_admin {
 			'se_use_metadata_search'		=> (isset($_POST['search_metadata']) && $_POST['search_metadata']),
 			'se_use_highlight'			=> (isset($_POST['search_highlight']) && $_POST['search_highlight']),
 			'se_highlight_color'			=> (isset($_POST['highlight_color'])) ? $_POST['highlight_color'] : '',
-			'se_highlight_style'			=> (isset($_POST['highlight_style'])) ? $_POST['highlight_style'] : ''
+			'se_highlight_style'			=> (isset($_POST['highlight_style'])) ? $_POST['highlight_style'] : '',
+			'se_research_metabox'			=> array ('visible_on_compose' => (isset($_POST['research_metabox']) && $_POST['research_metabox']),
+													   'external_search_enabled' => (isset($_POST['research_external_results']) && $_POST['research_external_results']))
 		);
+
 
 		if(isset($_POST['action']) && $_POST['action'] == "save") {
 			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', 'SearchEverything') . "</p></div>";
@@ -122,9 +125,66 @@ Class se_admin {
 		$options = se_get_options();
 		$meta = se_get_meta();
 
+		//get api key if it doesn't exist
+		if ( $options['se_research_metabox']['external_search_enabled'] && empty($meta['api_key'])) {
+			$api_key = $this->fetch_api_key();
+			$meta['api_key'] = $api_key;
+			se_update_meta($meta);
+		}
+
 		include(se_get_view('options_page'));
 
 	}	//end se_option_page
+
+
+	/**
+	* api
+	*
+	* API Call
+	*
+	* @param array $arguments Arguments to pass to the API
+	*/
+	function api($arguments, $api_key='')
+	{
+		$arguments = array_merge($arguments, array(
+			'api_key'=> $api_key
+			));
+		
+		if (!isset($arguments['format']))
+		{
+			$arguments['format'] = 'xml';
+		}
+		
+		return wp_remote_post(SE_ZEMANTA_API_GATEWAY, array('method' => 'POST', 'body' => $arguments));
+	}
+	
+
+	/**
+	* fetch_api_key
+	*
+	* Get API Key
+	*/
+	function fetch_api_key() 
+	{
+		$response = $this->api(array(
+			'method' => 'zemanta.auth.create_user',
+			'partner_id' => 'wordpress-se'
+			));
+
+		if(!is_wp_error($response))
+		{
+			if(preg_match('/<status>(.+?)<\/status>/', $response['body'], $matches))
+			{
+				if($matches[1] == 'ok' && preg_match('/<apikey>(.+?)<\/apikey>/', $response['body'], $matches))
+					return $matches[1];
+			}
+		}
+
+		return '';
+	}
+
+
+
 
 	function se_options_page_notice() {
 		$screen = get_current_screen();

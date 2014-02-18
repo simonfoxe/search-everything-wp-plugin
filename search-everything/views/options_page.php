@@ -2,6 +2,25 @@
 	<h2><?php _e('Search Everything', 'SearchEverything'); ?> <?php echo $meta['version']; ?> - <?php _e('settings','SearchEverything');?></h2>
 	<p><?php _e('Customize your search by checking one or more options below.','SearchEverything'); ?></p>
 	<form method="post">
+		<table id="se-research-settings" class="widefat">
+			<thead>
+				<tr class="title">
+					<th scope="col" class="manage-column se-col"><?php _e('Re-Search Everything', 'SearchEverything'); ?></th>
+					<th scope="col" class="manage-column"></th>
+				</tr>
+				<tr scope="row"><td>Show research tool on compose screen</td>
+				<td><input type="checkbox" id="research_metabox" name="research_metabox" value="yes" <?php checked($options['se_research_metabox']['visible_on_compose']); ?> /></td>
+				</tr>
+				<tr scope="row"><td>Show external results</td>
+				<td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /></td>
+				</tr>
+				<tr scope="row"><td>Zemanta API key</td>
+				<td><input type="text" id="research_api_key" name="research_api_key" value="<?php _e($meta['api_key']); ?>" /></td>
+				</tr>
+
+			</thead>
+
+		</table>
 		<table id="se-basic-settings" class="widefat">
 			<thead>
 				<tr class="title">

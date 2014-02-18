@@ -91,12 +91,13 @@ function se_migrate_7_0_4() {
 
 	if ($se_meta) {
 		$se_meta['version'] = '8.0';
+		$se_meta['api_key'] = false;
 	}
 
 	$se_options = get_option('se_options', false);
 
 	//enable external search
-	$se_options['research_widget'] = array (
+	$se_options['se_research_widget'] = array (
 		'visible_on_compose'		=> true,
 		'external_search_enabled'	=> false,
 		'notice_visible'			=> true,
@@ -192,9 +193,10 @@ function se_migrate_7_0_1() {
 
 
 function se_install() {
+	trigger_error('se_install');
 	$se_meta = array(
 		'blog_id' => false,
-		'api_key' => '',
+		'api_key' => false,
 		'auth_key' => false,
 		'version' => SE_VERSION,
 		'first_version' => SE_VERSION,
@@ -211,6 +213,7 @@ function se_install() {
 }
 
 function se_get_default_options() {
+	trigger_error('Get default options....');
 	$se_options = array(
 				'se_exclude_categories'	=> '',
 				'se_exclude_categories_list' 	=> '',
@@ -232,7 +235,7 @@ function se_get_default_options() {
 				'se_use_highlight'		=> false,
 				'se_highlight_color'		=> '',
 				'se_highlight_style'		=> '',
-				'research_widget'		 	=> array (
+				'se_research_metabox'		 	=> array (
 					'visible_on_compose'		=> true,
 					'external_search_enabled'	=> false,
 					'notice_visible'			=> true
