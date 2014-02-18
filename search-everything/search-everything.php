@@ -46,6 +46,15 @@ function se_get_view($view) {
 	return SE_PLUGIN_DIR . "/views/$view.php";
 }
 
+function se_admin_head() {
+	$se_options = se_get_options();
+	$se_meta = se_get_meta();
+	$se_metabox = $se_options['se_research_metabox'];
+	include(se_get_view('admin_head'));
+}
+
+add_action('admin_head', 'se_admin_head');
+
 class SearchEverything {
 
 	var $logging = false;

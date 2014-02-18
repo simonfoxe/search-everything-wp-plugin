@@ -104,7 +104,7 @@ function se_migrate_7_0_4() {
 		);
 
 	update_option('se_meta',$se_meta);
-	update_option('se_options',$se_meta);
+	update_option('se_options',$se_options);
 
 }
 
