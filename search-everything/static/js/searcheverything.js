@@ -39,32 +39,36 @@ var SearchEverything = (function ($) {
 				$('#se-metabox-results').remove();
 				input.closest('div').after(results);
 
-				if (!window.ZemantaAPIKey) {
-					$.ajax({
-						url: input.data('ajaxurl'),
-						method: 'get',
-						dataType: "json",
-						data: {
-							action: 'search_everything',
-							s: input.prop('value') || ''
-						},
-						success: function (data) {
-							var results = $('#se-metabox-own-results'),
-								resultsList = results.find('ul');
-
-							results.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
+				$.ajax({
+					url: input.data('ajaxurl'),
+					method: 'get',
+					dataType: "json",
+					data: {
+						action: 'search_everything',
+						text: tinyMCE && tinyMCE.activeEditor.getContent() || '',
+						s: input.prop('value') || ''
+					},
+					success: function (data) {
+						var ownResults = $('#se-metabox-own-results'),
+							ownResultsList = ownResults.find('ul'),
+							externalResults = $('#se-metabox-own-results'),
+							externalResultsList = ownResults.find('ul');
+						if (!window.ExternalSearchEnabled) {
+							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
+						} else {
 
-							$('.se-spinner, .se-no-results').remove();
-							if (data.length === 0) {
-								$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
-							} else {
-								results.show();
-								r.displayResults(resultsList, data);
-							}
 						}
-					});
-				}
+
+						$('.se-spinner, .se-no-results').remove();
+						if (data.length === 0) {
+							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
+						} else {
+							ownResults.show();
+							r.displayResults(ownResultsList, data);
+						}
+					}
+				});
 			},
 			urlDomain: function (url) { // http://stackoverflow.com/a/8498668
 				var a = document.createElement('a');

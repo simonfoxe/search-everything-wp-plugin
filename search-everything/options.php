@@ -127,7 +127,7 @@ Class se_admin {
 
 		//get api key if it doesn't exist
 		if ( $options['se_research_metabox']['external_search_enabled'] && empty($meta['api_key'])) {
-			$api_key = $this->fetch_api_key();
+			$api_key = fetch_api_key();
 			$meta['api_key'] = $api_key;
 			se_update_meta($meta);
 		}
@@ -135,55 +135,6 @@ Class se_admin {
 		include(se_get_view('options_page'));
 
 	}	//end se_option_page
-
-
-	/**
-	* api
-	*
-	* API Call
-	*
-	* @param array $arguments Arguments to pass to the API
-	*/
-	function api($arguments, $api_key='')
-	{
-		$arguments = array_merge($arguments, array(
-			'api_key'=> $api_key
-			));
-		
-		if (!isset($arguments['format']))
-		{
-			$arguments['format'] = 'xml';
-		}
-		
-		return wp_remote_post(SE_ZEMANTA_API_GATEWAY, array('method' => 'POST', 'body' => $arguments));
-	}
-	
-
-	/**
-	* fetch_api_key
-	*
-	* Get API Key
-	*/
-	function fetch_api_key() 
-	{
-		$response = $this->api(array(
-			'method' => 'zemanta.auth.create_user',
-			'partner_id' => 'wordpress-se'
-			));
-
-		if(!is_wp_error($response))
-		{
-			if(preg_match('/<status>(.+?)<\/status>/', $response['body'], $matches))
-			{
-				if($matches[1] == 'ok' && preg_match('/<apikey>(.+?)<\/apikey>/', $response['body'], $matches))
-					return $matches[1];
-			}
-		}
-
-		return '';
-	}
-
-
 
 
 	function se_options_page_notice() {
@@ -197,4 +148,54 @@ Class se_admin {
 			include(se_get_view('options_page_notice'));
 		}
 	}
+}
+
+/**
+* fetch_api_key
+*
+* Get API Key
+*/
+function fetch_api_key()
+{
+	$response = api(array(
+		'method' => 'zemanta.auth.create_user',
+		'partner_id' => 'wordpress-se'
+		));
+
+	if(!is_wp_error($response))
+	{
+		if(preg_match('/<status>(.+?)<\/status>/', $response['body'], $matches))
+		{
+			if($matches[1] == 'ok' && preg_match('/<apikey>(.+?)<\/apikey>/', $response['body'], $matches))
+				return $matches[1];
+		}
+	}
+
+	return '';
+}
+
+
+/**
+* api
+*
+* API Call
+*
+* @param array $arguments Arguments to pass to the API
+*/
+function api($arguments)
+{
+	$meta = se_get_meta();
+
+	$api_key = $meta['api_key'] ? $meta['api_key'] : '';
+
+	$arguments = array_merge($arguments, array(
+		'api_key'=> $api_key
+		));
+
+	if (!isset($arguments['format']))
+	{
+		$arguments['format'] = 'xml';
+	}
+
+	return wp_remote_post(SE_ZEMANTA_API_GATEWAY, array('body' => $arguments));
 }

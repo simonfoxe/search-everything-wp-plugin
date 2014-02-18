@@ -15,7 +15,7 @@
 				<td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /></td>
 				</tr>
 				<tr scope="row"><td>Zemanta API key</td>
-				<td><input type="text" id="research_api_key" name="research_api_key" value="<?php _e($meta['api_key']); ?>" /></td>
+				<td><input type="text" id="research_api_key" name="research_api_key" disabled="disabled" value="<?php _e($meta['api_key']); ?>" /></td>
 				</tr>
 
 			</thead>

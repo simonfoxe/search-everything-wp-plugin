@@ -798,13 +798,34 @@ add_action('wp_ajax_search_everything', 'search_everything_callback');
 function search_everything_callback() {
 	$is_query = !empty($_GET['s']);
 
-	$result = array();
 	if ($is_query) {
-		$SE = new SearchEverything(true);
+		$result = array(
+			'own' => array(),
+			'external' => array()
+		);
 
 		$params = array(
 			's' => $_GET['s']
 		);
+
+		$zemanta_response = api(array(
+			'method' => 'zemanta.suggest',
+			'return_images' => 0,
+			'return_rich_objects' => 0,
+			'return_articles' => 1,
+			'return_markup' => 0,
+			'return_rdf_links' => 0,
+			'return_keywords' => 0,
+			'interface' => 'wordpress-se',
+			'format' => 'json',
+			'emphasis' => $_GET['s'],
+			'text' => $_GET['text']
+		));
+
+		$result['external'] = json_decode($zemanta_response['body'])->articles;
+
+		$SE = new SearchEverything(true);
+
 		if (!empty($_GET['exact'])) {
 			$params['exact'] = true;
 		}
@@ -814,7 +835,7 @@ function search_everything_callback() {
 		while ( $post_query->have_posts() ) {
 			$post_query->the_post();
 
-			$result[] = get_post();
+			$result['own'][] = get_post();
 		}
 		$post_query->reset_postdata();
 		
