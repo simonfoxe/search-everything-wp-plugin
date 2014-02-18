@@ -57,15 +57,20 @@ var SearchEverything = (function ($) {
 							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
 						} else {
-
+							if (data.external.length === 0) {
+								$('#se-metabox-results').append('<p class="se-no-results">We haven\'t found any external resources for you.</p>');
+							} else {
+								externalResults.show();
+								r.displayResults(externalResultsList, data.external);
+							}
 						}
 
 						$('.se-spinner, .se-no-results').remove();
-						if (data.length === 0) {
+						if (data.own.length === 0) {
 							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
 						} else {
 							ownResults.show();
-							r.displayResults(ownResultsList, data);
+							r.displayResults(ownResultsList, data.own);
 						}
 					}
 				});
