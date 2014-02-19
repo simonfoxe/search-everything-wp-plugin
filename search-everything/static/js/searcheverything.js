@@ -11,14 +11,23 @@ var SearchEverything = (function ($) {
 			handleWindowResize: function () {
 				$(window).resize(r.resizeSearchInput);
 			},
-			handleMetaboxMove: function () {
+			handleMetaboxActions: function () {
 				$('.meta-box-sortables').on('sortstop', function (event, ui) {
 					if (ui.item && ui.item.length && ui.item[0].id === 'se-metabox') {
 						r.resizeSearchInput();
 					}
 				});
+				$('.postbox h3, .postbox .handlediv').on('click', function (ev) {
+					var postbox = $(this).closest('.postbox');
+
+					setTimeout(function () {
+						if (!postbox.hasClass('closed')) {
+							r.resizeSearchInput();
+						}
+					}, 1); // Delay till WP finishes its own thing and then we can kick in
+				})
 			},
-			displayResults: function (holder, data) {
+			displayOwnResults: function (holder, data) {
 				$.each(data, function (i, result) {
 					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
 					if (i > 4) {
@@ -27,6 +36,20 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
+					listItem.data(result);
+
+					holder.append(listItem);
+				});
+			},
+			displayExternalResults: function (holder, data) {
+				$.each(data, function (i, result) {
+					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
+					if (i > 4) {
+						return;
+					}
+
+					listItem.find('h6').text(result.title || 'Title missing');
+					listItem.find('p').text($('<div>' + result.text_preview + '</div>').text().substring(0, 150) || 'No excerpt');
 					listItem.data(result);
 
 					holder.append(listItem);
@@ -51,8 +74,8 @@ var SearchEverything = (function ($) {
 					success: function (data) {
 						var ownResults = $('#se-metabox-own-results'),
 							ownResultsList = ownResults.find('ul'),
-							externalResults = $('#se-metabox-own-results'),
-							externalResultsList = ownResults.find('ul');
+							externalResults = $('#se-metabox-external-results'),
+							externalResultsList = externalResults.find('ul');
 						if (!window.externalSearchEnabled) {
 							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
@@ -61,7 +84,7 @@ var SearchEverything = (function ($) {
 								$('#se-metabox-results').append('<p class="se-no-results">We haven\'t found any external resources for you.</p>');
 							} else {
 								externalResults.show();
-								r.displayResults(externalResultsList, data.external);
+								r.displayExternalResults(externalResultsList, data.external);
 							}
 						}
 
@@ -70,7 +93,7 @@ var SearchEverything = (function ($) {
 							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
 						} else {
 							ownResults.show();
-							r.displayResults(ownResultsList, data.own);
+							r.displayOwnResults(ownResultsList, data.own);
 						}
 					}
 				});
@@ -99,8 +122,7 @@ var SearchEverything = (function ($) {
 				});
 			},
 			initResultBehaviour: function () {
-				$('#se-metabox').on('click', '#se-metabox-results li', function (ev) {
-					var html = $('<div id="se-just-a-wrapper">' +
+				var html = '<div id="se-just-a-wrapper">' +
 							'<p>' +
 								'<a target="_blank" class="se-box">' +
 									'<span class="se-box-heading">' +
@@ -111,23 +133,50 @@ var SearchEverything = (function ($) {
 									'<span class="se-box-domain"></span>' +
 								'</a>' +
 							'</p>' +
-						'</div>'),
+						'</div>',
+					metabox = $('#se-metabox');
+
+				metabox.on('click', '#se-metabox-own-results li', function (ev) {
+					var insertHtml = $(html),
 						listItem = $(this),
 						date = (function () {
 							var datePart = listItem.data('post_date').split(' ')[0].split('-'),
-								actualDate = new Date(datePart[0], datePart[1]-1, datePart[2]);
+								actualDate = new Date(datePart[0], datePart[1] - 1, datePart[2]);
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}());
 
-					html.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing');
-					html.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
-					html.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
-					html.find('.se-box-date').text(date);
-					html.find('.se-box').attr('href', listItem.data('guid'));
+					insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing');
+					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
+					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
+					insertHtml.find('.se-box-date').text(date);
+					insertHtml.find('.se-box').attr('href', listItem.data('guid'));
 
 					if (send_to_editor) {
-						send_to_editor(html.html());
+						send_to_editor(insertHtml.html());
+					} else {
+						// Dunno yet
+					}
+				});
+				metabox.on('click', '#se-metabox-external-results li', function (ev) {
+					var insertHtml = $(html),
+						listItem = $(this),
+						date = (function () {
+							console.log(listItem.data('published_datetime'), listItem.data());
+							var datePart = listItem.data('published_datetime').split('T')[0].split('-'),
+								actualDate = new Date(datePart[0], parseInt(datePart[1], 10) - 1, parseInt(datePart[2], 10));
+
+							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
+						}());
+
+					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing');
+					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
+					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 150) || 'No excerpt');
+					insertHtml.find('.se-box-date').text(date);
+					insertHtml.find('.se-box').attr('href', listItem.data('url'));
+
+					if (send_to_editor) {
+						send_to_editor(insertHtml.html());
 					} else {
 						// Dunno yet
 					}
@@ -138,7 +187,7 @@ var SearchEverything = (function ($) {
 			initialize: function () {
 				r.resizeSearchInput();
 				r.handleWindowResize();
-				r.handleMetaboxMove();
+				r.handleMetaboxActions();
 				r.handleSearch();
 				r.initResultBehaviour();
 
