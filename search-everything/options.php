@@ -132,6 +132,12 @@ Class se_admin {
 			se_update_meta($meta);
 		}
 
+		if (!empty($meta['api_key']) && empty($meta['sfid'])) {
+			$meta['sfid'] = get_sfid();
+
+			se_update_meta($meta);
+		}
+
 		include(se_get_view('options_page'));
 
 	}	//end se_option_page
@@ -198,4 +204,20 @@ function api($arguments)
 	}
 
 	return wp_remote_post(SE_ZEMANTA_API_GATEWAY, array('body' => $arguments));
+}
+
+function get_sfid() {
+	//http://prefs.zemanta.com/api/get-sfid/?url=http://zemanta.com
+
+	$url = get_site_url();
+
+	$response = wp_remote_GET(SE_ZEMANTA_PREFS_URL . '?url=' . urlencode($url));
+	if(!is_wp_error($response)) {
+		$response_json = json_decode($response['body']);
+		trigger_error(print_r($response_json, true));
+		if ($response_json->status === 'ok') {
+			return $response_json->sfid;
+		}
+	}
+	return null;
 }
