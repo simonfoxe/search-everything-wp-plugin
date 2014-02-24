@@ -207,16 +207,19 @@ function api($arguments)
 }
 
 function get_sfid() {
-	//http://prefs.zemanta.com/api/get-sfid/?url=http://zemanta.com
-
-	$url = get_site_url();
-
-	$response = wp_remote_GET(SE_ZEMANTA_PREFS_URL . '?url=' . urlencode($url));
-	if(!is_wp_error($response)) {
-		$response_json = json_decode($response['body']);
-		trigger_error(print_r($response_json, true));
-		if ($response_json->status === 'ok') {
-			return $response_json->sfid;
+	$site_urls = array(
+		get_bloginfo('rss2_url'),
+		get_site_url()
+	);
+	foreach($site_urls as $url) {
+		if (empty($url)) continue;
+		$response = wp_remote_GET(SE_ZEMANTA_PREFS_URL . '?url=' . urlencode($url));
+		if(!is_wp_error($response)) {
+			$response_json = json_decode($response['body']);
+			
+			if ($response_json->status === 'ok' && !empty($response_json->sfid)) {
+				return $response_json->sfid;
+			}
 		}
 	}
 	return null;
