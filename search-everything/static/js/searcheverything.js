@@ -28,11 +28,14 @@ var SearchEverything = (function ($) {
 				})
 			},
 			displayOwnResults: function (holder, data) {
+				var count = 0;
+
 				$.each(data, function (i, result) {
 					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
+					count += 1;
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
@@ -40,13 +43,18 @@ var SearchEverything = (function ($) {
 
 					holder.append(listItem);
 				});
+
+				return count;
 			},
 			displayExternalResults: function (holder, data) {
+				var count = 0;
+
 				$.each(data, function (i, result) {
 					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
+					count += 1;
 
 					listItem.find('h6').text(result.title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.text_preview + '</div>').text().substring(0, 150) || 'No excerpt');
@@ -54,10 +62,13 @@ var SearchEverything = (function ($) {
 
 					holder.append(listItem);
 				});
+
+				return count;
 			},
 			performSearch: function () {
 				var input = $('#se-metabox-text'),
-					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>');
+					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list se-hidden"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>'),
+					count = 0;
 
 				$('#se-metabox-results').remove();
 				input.closest('div').after(results);
@@ -84,7 +95,8 @@ var SearchEverything = (function ($) {
 								$('#se-metabox-results').append('<p class="se-no-results">We haven\'t found any external resources for you.</p>');
 							} else {
 								externalResults.show();
-								r.displayExternalResults(externalResultsList, data.external);
+								count =  r.displayExternalResults(externalResultsList, data.external);
+								externalResults.find('h4').text(externalResults.find('h4').text() + ' (' + count + ')');
 							}
 						}
 
@@ -93,7 +105,8 @@ var SearchEverything = (function ($) {
 							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
 						} else {
 							ownResults.show();
-							r.displayOwnResults(ownResultsList, data.own);
+							count = r.displayOwnResults(ownResultsList, data.own);
+							ownResults.find('h4').text(ownResults.find('h4').text() + ' (' + count + ')');
 						}
 					}
 				});
@@ -180,6 +193,10 @@ var SearchEverything = (function ($) {
 					} else {
 						// Dunno yet
 					}
+				});
+
+				metabox.on('click', '.se-metabox-results-list h4', function () {
+					$(this).closest('.se-metabox-results-list').toggleClass('se-hidden');
 				});
 			}
 		},
