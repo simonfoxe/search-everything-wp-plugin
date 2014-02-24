@@ -132,6 +132,12 @@ Class se_admin {
 			se_update_meta($meta);
 		}
 
+		if (!empty($meta['api_key']) && empty($meta['sfid'])) {
+			$meta['sfid'] = get_sfid();
+
+			se_update_meta($meta);
+		}
+
 		include(se_get_view('options_page'));
 
 	}	//end se_option_page
@@ -198,4 +204,23 @@ function api($arguments)
 	}
 
 	return wp_remote_post(SE_ZEMANTA_API_GATEWAY, array('body' => $arguments));
+}
+
+function get_sfid() {
+	$site_urls = array(
+		get_bloginfo('rss2_url'),
+		get_site_url()
+	);
+	foreach($site_urls as $url) {
+		if (empty($url)) continue;
+		$response = wp_remote_GET(SE_ZEMANTA_PREFS_URL . '?url=' . urlencode($url));
+		if(!is_wp_error($response)) {
+			$response_json = json_decode($response['body']);
+			
+			if ($response_json->status === 'ok' && !empty($response_json->sfid)) {
+				return $response_json->sfid;
+			}
+		}
+	}
+	return null;
 }

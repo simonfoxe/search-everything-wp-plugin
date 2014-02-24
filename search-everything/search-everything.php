@@ -25,9 +25,11 @@ if (!defined('SE_PLUGIN_URL'))
 if (!defined('SE_ZEMANTA_API_GATEWAY'))
 	define('SE_ZEMANTA_API_GATEWAY', 'http://api.zemanta.com/services/rest/0.0/');
 
-if (!defined('SE_ZEMANTA_DASHBOARD'))
+if (!defined('SE_ZEMANTA_DASHBOARD_URL'))
 	define('SE_ZEMANTA_DASHBOARD_URL', 'http://blogmind.zemanta.com/');
 
+if (!defined('SE_ZEMANTA_PREFS_URL'))
+	define('SE_ZEMANTA_PREFS_URL', 'http://prefs.zemanta.com/api/get-sfid/');
 
 include_once(SE_PLUGIN_DIR . '/config.php');
 include_once(SE_PLUGIN_DIR . '/options.php');
