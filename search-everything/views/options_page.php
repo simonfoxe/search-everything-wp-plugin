@@ -12,14 +12,18 @@
 				<td><input type="checkbox" id="research_metabox" name="research_metabox" value="yes" <?php checked($options['se_research_metabox']['visible_on_compose']); ?> /></td>
 				</tr>
 				<tr scope="row"><td>Show external results</td>
-				<td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /></td>
+	 <td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /></td>
 				</tr>
 				<tr scope="row"><td>Zemanta API key</td>
 				<td><input type="text" id="research_api_key" name="research_api_key" disabled="disabled" value="<?php _e($meta['api_key']); ?>" /></td>
 				</tr>
-
-			</thead>
-
+				<?php if (!empty($external_message) && !empty($options['se_research_metabox']['external_search_enabled'])): ?>
+				<tr scope="row">
+					<td>Status</td>
+					<td><strong><?php echo $external_message; ?></strong></td>
+				</tr>
+				<?php endif; ?>
+	 		</thead>
 		</table>
 		<table id="se-basic-settings" class="widefat">
 			<thead>

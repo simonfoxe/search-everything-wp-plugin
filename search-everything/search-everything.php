@@ -31,6 +31,13 @@ if (!defined('SE_ZEMANTA_DASHBOARD_URL'))
 if (!defined('SE_ZEMANTA_PREFS_URL'))
 	define('SE_ZEMANTA_PREFS_URL', 'http://prefs.zemanta.com/api/get-sfid/');
 
+if (!defined('SE_PREFS_STATE_FOUND')) {
+	define('SE_PREFS_STATE_FOUND', 1);
+	define('SE_PREFS_STATE_FAILED', -2);
+	define('SE_PREFS_STATE_NOT_ENGLISH', -4);
+	define('SE_PREFS_STATE_EMPTY', -7);
+}
+
 include_once(SE_PLUGIN_DIR . '/config.php');
 include_once(SE_PLUGIN_DIR . '/options.php');
 
