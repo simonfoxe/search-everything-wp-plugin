@@ -146,9 +146,9 @@ var SearchEverything = (function ($) {
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}());
 
-					insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing');
+					insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing'.substring(0, 50));
 					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
-					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
+					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 100) || 'No excerpt');
 					insertHtml.find('.se-box-date').text(date);
 					insertHtml.find('.se-box').attr('href', listItem.data('guid'));
 
@@ -169,9 +169,9 @@ var SearchEverything = (function ($) {
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}());
 
-					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing');
+					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
 					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
-					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 150) || 'No excerpt');
+					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 100) || 'No excerpt');
 					insertHtml.find('.se-box-date').text(date);
 					insertHtml.find('.se-box').attr('href', listItem.data('url'));
 
