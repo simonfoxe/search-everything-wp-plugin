@@ -39,7 +39,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
-					listItem.find('span').text(r.extractDomainName(result.guid));
+					listItem.find('span').text(r.urlDomain(result.guid));
 					listItem.data(result);
 
 					holder.append(listItem);
@@ -59,7 +59,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.text_preview + '</div>').text().substring(0, 150) || 'No excerpt');
-					listItem.find('span').text(r.extractDomainName(result.url));
+					listItem.find('span').text(r.urlDomain(result.url));
 					listItem.data(result);
 
 					holder.append(listItem);
@@ -137,11 +137,6 @@ var SearchEverything = (function ($) {
 					}
 				});
 			},
-			extractDomainName: function (url) {
-				var tmp = document.createElement('a');
-				tmp.href = url;
-				return tmp.hostname;
-			},
 			initResultBehaviour: function () {
 				var html = '<div id="se-just-a-wrapper">' +
 							'<p>' +
@@ -165,19 +160,28 @@ var SearchEverything = (function ($) {
 								actualDate = new Date(datePart[0], datePart[1] - 1, datePart[2]);
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
-						}());
+						}()),
+						inserted = $('a.se-box[href="' + listItem.data('guid') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
 
-					insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing'.substring(0, 50));
-					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
-					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 100) || 'No excerpt');
-					insertHtml.find('.se-box-date').text(date);
-					insertHtml.find('.se-box-domain').text(r.extractDomainName(listItem.data('guid')));
-					insertHtml.find('.se-box').attr('href', listItem.data('guid'));
-
-					if (send_to_editor) {
-						send_to_editor(insertHtml.html());
+					if (inserted.length) {
+						if (inserted.parent().prop("tagName") === 'P') {
+							inserted.closest('p').remove();
+						} else {
+							inserted.remove();
+						}
 					} else {
-						// Dunno yet
+						insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing'.substring(0, 50));
+						insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
+						insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 100) || 'No excerpt');
+						insertHtml.find('.se-box-date').text(date);
+						insertHtml.find('.se-box-domain').text(r.urlDomain(listItem.data('guid')));
+						insertHtml.find('.se-box').attr('href', listItem.data('guid'));
+
+						if (send_to_editor) {
+							send_to_editor(insertHtml.html());
+						} else {
+							// Dunno yet
+						}
 					}
 				});
 				metabox.on('click', '#se-metabox-external-results li', function (ev) {
@@ -188,19 +192,28 @@ var SearchEverything = (function ($) {
 								actualDate = new Date(datePart[0], parseInt(datePart[1], 10) - 1, parseInt(datePart[2], 10));
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
-						}());
+						}()),
+						inserted = $('a.se-box[href="' + listItem.data('guid') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
 
-					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
-					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
-					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 100) || 'No excerpt');
-					insertHtml.find('.se-box-date').text(date);
-					insertHtml.find('.se-box-domain').text(r.extractDomainName(listItem.data('url')));
-					insertHtml.find('.se-box').attr('href', listItem.data('url'));
-
-					if (send_to_editor) {
-						send_to_editor(insertHtml.html());
+					if (inserted.length) {
+						if (inserted.parent().prop("tagName") === 'P') {
+							inserted.closest('p').remove();
+						} else {
+							inserted.remove();
+						}
 					} else {
-						// Dunno yet
+						insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
+						insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
+						insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 100) || 'No excerpt');
+						insertHtml.find('.se-box-date').text(date);
+						insertHtml.find('.se-box-domain').text(r.urlDomain(listItem.data('url')));
+						insertHtml.find('.se-box').attr('href', listItem.data('url'));
+
+						if (send_to_editor) {
+							send_to_editor(insertHtml.html());
+						} else {
+							// Dunno yet
+						}
 					}
 				});
 
