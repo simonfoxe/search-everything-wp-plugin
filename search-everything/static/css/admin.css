@@ -10,5 +10,7 @@
 .se-col {width:350px;}
 .se-suboption label { font-size: smaller;margin-left:10px; color:#666;}
 
-#se-top-notice {width:80%;position:relative;}
+#se-top-notice {width:80%; position:relative;}
 #se-top-notice .updated {margin:0;}
+
+#se-research-settings td { vertical-align: middle; }

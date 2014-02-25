@@ -4,6 +4,17 @@ global $se_options, $se_meta;
 $se_options = false;
 $se_meta = false;
 
+$se_response_messages = array(
+	SE_PREFS_STATE_NOT_ENGLISH => __('Your blog is not in English', 'SearchEverything'),
+	SE_PREFS_STATE_EMPTY => __('Your blog feed is empty', 'SearchEverything'),
+	SE_PREFS_STATE_FAILED => __('Unable to reslove URL to a source feed' , 'SearchEverything'),
+	SE_PREFS_STATE_FOUND => __('You are connected to Zemanta network', 'SearchEverything')
+);
+
+function se_get_response_messages() {
+	global $se_response_messages;
+	return $se_response_messages;
+}
 
 function se_get_options() {
 	global $se_options, $se_meta;
@@ -193,7 +204,6 @@ function se_migrate_7_0_1() {
 
 
 function se_install() {
-	trigger_error('se_install');
 	$se_meta = array(
 		'blog_id' => false,
 		'api_key' => false,
@@ -213,7 +223,6 @@ function se_install() {
 }
 
 function se_get_default_options() {
-	trigger_error('Get default options....');
 	$se_options = array(
 				'se_exclude_categories'	=> '',
 				'se_exclude_categories_list' 	=> '',

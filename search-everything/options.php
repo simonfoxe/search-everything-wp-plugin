@@ -1,7 +1,7 @@
 <?php
 
 Class se_admin {
-
+	
 	function se_admin() {
 		// Load language file
 		$locale = get_locale();
@@ -132,10 +132,18 @@ Class se_admin {
 			se_update_meta($meta);
 		}
 
+		$response_messages = se_get_response_messages();
+		$external_message = "";
 		if (!empty($meta['api_key']) && empty($meta['sfid'])) {
-			$meta['sfid'] = get_sfid();
-
-			se_update_meta($meta);
+			$sfid_response = get_sfid();
+			if (!empty($sfid_response[0])) {
+				$meta['sfid'] = $sfid_response[1];
+				se_update_meta($meta);
+			}
+			$external_message = !empty($response_messages[$sfid_response[1]]) ? $response_messages[$sfid_response[1]] : $response_messages[SE_PREFS_STATE_FAILED];
+		}
+		elseif (!empty($meta['sfid'])) {
+			$external_message = $response_messages[SE_PREFS_STATE_FOUND];
 		}
 
 		include(se_get_view('options_page'));
@@ -211,16 +219,17 @@ function get_sfid() {
 		get_bloginfo('rss2_url'),
 		get_site_url()
 	);
+	$response_state;
 	foreach($site_urls as $url) {
 		if (empty($url)) continue;
 		$response = wp_remote_GET(SE_ZEMANTA_PREFS_URL . '?url=' . urlencode($url));
 		if(!is_wp_error($response)) {
 			$response_json = json_decode($response['body']);
-			
+			$response_state = $response_json->state;
 			if ($response_json->status === 'ok' && !empty($response_json->sfid)) {
-				return $response_json->sfid;
+				return array($response_json->sfid, $response_state);
 			}
 		}
 	}
-	return null;
+	return array(null, $response_state);
 }
