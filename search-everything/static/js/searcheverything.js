@@ -69,7 +69,7 @@ var SearchEverything = (function ($) {
 			},
 			performSearch: function () {
 				var input = $('#se-metabox-text'),
-					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list se-hidden"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>'),
+					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list' + (!!window.externalSearchEnabled ? ' se-hidden' : '') + '"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>'),
 					count = 0;
 
 				$('#se-metabox-results').remove();
@@ -95,6 +95,7 @@ var SearchEverything = (function ($) {
 						} else {
 							if (data.external.length === 0) {
 								$('#se-metabox-results').append('<p class="se-no-results">We haven\'t found any external resources for you.</p>');
+								ownResults.removeClass('se-hidden');
 							} else {
 								externalResults.show();
 								count =  r.displayExternalResults(externalResultsList, data.external);
@@ -188,8 +189,6 @@ var SearchEverything = (function ($) {
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}());
-
-					console.log(2, listItem.data());
 
 					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
 					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
