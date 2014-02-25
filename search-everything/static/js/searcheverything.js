@@ -31,7 +31,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
+					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><span></span><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
@@ -39,6 +39,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
+					listItem.find('span').text(r.extractDomainName(result.guid));
 					listItem.data(result);
 
 					holder.append(listItem);
@@ -50,7 +51,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><p></p></a></li>');
+					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><span></span><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
@@ -58,6 +59,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.title || 'Title missing');
 					listItem.find('p').text($('<div>' + result.text_preview + '</div>').text().substring(0, 150) || 'No excerpt');
+					listItem.find('span').text(r.extractDomainName(result.url));
 					listItem.data(result);
 
 					holder.append(listItem);
@@ -134,6 +136,11 @@ var SearchEverything = (function ($) {
 					}
 				});
 			},
+			extractDomainName: function (url) {
+				var tmp = document.createElement('a');
+				tmp.href = url;
+				return tmp.hostname;
+			},
 			initResultBehaviour: function () {
 				var html = '<div id="se-just-a-wrapper">' +
 							'<p>' +
@@ -163,6 +170,7 @@ var SearchEverything = (function ($) {
 					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
 					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 100) || 'No excerpt');
 					insertHtml.find('.se-box-date').text(date);
+					insertHtml.find('.se-box-domain').text(r.extractDomainName(listItem.data('guid')));
 					insertHtml.find('.se-box').attr('href', listItem.data('guid'));
 
 					if (send_to_editor) {
@@ -175,17 +183,19 @@ var SearchEverything = (function ($) {
 					var insertHtml = $(html),
 						listItem = $(this),
 						date = (function () {
-							console.log(listItem.data('published_datetime'), listItem.data());
 							var datePart = listItem.data('published_datetime').split('T')[0].split('-'),
 								actualDate = new Date(datePart[0], parseInt(datePart[1], 10) - 1, parseInt(datePart[2], 10));
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}());
 
+					console.log(2, listItem.data());
+
 					insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
 					insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
 					insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 100) || 'No excerpt');
 					insertHtml.find('.se-box-date').text(date);
+					insertHtml.find('.se-box-domain').text(r.extractDomainName(listItem.data('url')));
 					insertHtml.find('.se-box').attr('href', listItem.data('url'));
 
 					if (send_to_editor) {
