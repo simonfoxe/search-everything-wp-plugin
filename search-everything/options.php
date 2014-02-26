@@ -45,7 +45,7 @@ Class se_admin {
 	*/
 
 	function se_meta_box_add() {
-		add_meta_box( 'se-metabox', 'Re-Search Everything', array(&$this,'se_meta_box_cb'), 'post', 'side', 'high' );
+		add_meta_box( 'se-metabox', 'Research Everything', array(&$this,'se_meta_box_cb'), 'post', 'side', 'high' );
 	}
 
 	function se_meta_box_cb($post) {

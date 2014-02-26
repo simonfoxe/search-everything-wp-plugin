@@ -5,7 +5,7 @@
 		<table id="se-research-settings" class="widefat">
 			<thead>
 				<tr class="title">
-					<th scope="col" class="manage-column se-col"><?php _e('Re-Search Everything', 'SearchEverything'); ?></th>
+					<th scope="col" class="manage-column se-col"><?php _e('Research Everything', 'SearchEverything'); ?></th>
 					<th scope="col" class="manage-column"></th>
 				</tr>
 				<tr scope="row"><td>Show research tool on compose screen</td>
