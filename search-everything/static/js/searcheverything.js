@@ -69,7 +69,7 @@ var SearchEverything = (function ($) {
 			},
 			performSearch: function () {
 				var input = $('#se-metabox-text'),
-					results = $('<div id="se-metabox-results"><div id="se-metabox-own-results" class="se-metabox-results-list' + (!!window.externalSearchEnabled ? ' se-hidden' : '') + '"><h4>Results from your blog</h4><ul></ul></div><div id="se-metabox-external-results" class="se-metabox-results-list"><h4>Results from around the web</h4><ul></ul></div><div class="se-spinner"></div></div>'),
+					results = $('<div id="se-metabox-results"><div id="se-metabox-external-results" class="se-metabox-results-list se-hidden"><h4>Results from around the web</h4><ul></ul></div><div id="se-metabox-own-results" class="se-metabox-results-list"><h4>Results from your blog</h4><ul></ul></div><div class="se-spinner"></div></div>'),
 					count = 0;
 
 				$('#se-metabox-results').remove();
@@ -95,7 +95,6 @@ var SearchEverything = (function ($) {
 						} else {
 							if (data.external.length === 0) {
 								$('#se-metabox-results').append('<p class="se-no-results">We haven\'t found any external resources for you.</p>');
-								ownResults.removeClass('se-hidden');
 							} else {
 								externalResults.show();
 								count =  r.displayExternalResults(externalResultsList, data.external);
@@ -105,12 +104,16 @@ var SearchEverything = (function ($) {
 
 						$('.se-spinner, .se-no-results').remove();
 						if (data.own.length === 0) {
-							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + '</strong>.</p>');
+							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + ' on your blog</strong>.</p>');
+							externalResults.removeClass('se-hidden');
 						} else {
 							ownResults.show();
 							count = r.displayOwnResults(ownResultsList, data.own);
 							ownResults.find('h4').text(ownResults.find('h4').text() + ' (' + count + ')');
 						}
+					},
+					error: function (xhr) {
+
 					}
 				});
 			},
@@ -140,7 +143,7 @@ var SearchEverything = (function ($) {
 			initResultBehaviour: function () {
 				var html = '<div id="se-just-a-wrapper">' +
 							'<p>' +
-								'<a target="_blank" class="se-box">' +
+								'<a target="_blank" class="se-box se-article">' +
 									'<span class="se-box-heading">' +
 										'<span class="se-box-heading-title"></span>' +
 									'</span>' +
@@ -193,7 +196,7 @@ var SearchEverything = (function ($) {
 
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}()),
-						inserted = $('a.se-box[href="' + listItem.data('guid') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
+						inserted = $('a.se-box[href="' + listItem.data('url') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
 
 					if (inserted.length) {
 						if (inserted.parent().prop("tagName") === 'P') {
