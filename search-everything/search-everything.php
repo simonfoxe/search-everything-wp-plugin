@@ -834,6 +834,7 @@ function search_everything_callback() {
 			'return_markup' => 0,
 			'return_rdf_links' => 0,
 			'return_keywords' => 0,
+			'careful_pc' => 1,
 			'interface' => 'wordpress-se',
 			'format' => 'json',
 			'emphasis' => $_GET['s'],
