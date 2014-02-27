@@ -863,7 +863,12 @@ function search_everything_callback() {
 			'text' => $_GET['text']
 		));
 
-		$result['external'] = json_decode($zemanta_response['body'])->articles;
+		if (!is_wp_error($zemanta_response)) {
+			$result['external'] = json_decode($zemanta_response['body'])->articles;
+		}
+		else {
+			trigger_error('bla');
+		}
 
 		$SE = new SearchEverything(true);
 
