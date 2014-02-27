@@ -16,13 +16,15 @@ From Jan 24, 2014 Search Everything originaly developed by dancameron, sproutven
 
 Search Everything improves WordPress default search functionality without modifying any of the template pages. You can configure it to search pages, excerpts, attachments, drafts, comments, tags and custom fields (metadata) and you can specify your own search highlight style. It also offers the ability to exclude specific pages and posts. It does not search password-protected content. Simply install, configure... and search.
 
+**NEW:*** Search Everything plugin now includes a writing helper called Research Everything which let’s you search for your posts and link to them while writing. You can also enable Power Search to research posts from the wider web. 
+
 = Better WordPress search in three steps =
 
 * Activate
 * Configure options
 * Search!
 
-= What it does: =
+= What it does =
 
 Search Everything increases the ability of the default Wordpress Search, options include:
 
