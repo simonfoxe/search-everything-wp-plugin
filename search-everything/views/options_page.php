@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h2><?php _e('Search Everything', 'SearchEverything'); ?> <?php _e('options','SearchEverything');?> (<?php _e('current version','SearchEverything') ?> <?php echo $meta['version']; ?>)</h2>
-	<div id="se-description" class="wrap widefat">
-	<p><span class="se-name"><?php _e('Search Everything', 'SearchEverything'); ?> </span><?php _e('is the most reliable and efficient search plugin for WordPress. 
+	<div id="se-description" class="widefat">
+		<p><span class="se-name"><?php _e('Search Everything', 'SearchEverything'); ?> </span><?php _e('is the most reliable and efficient search plugin for WordPress. 
 	It improves the search results for your readers, and comes with the','SearchEverything')?> <span class="se-name"><?php _e('Research Everything','SearchEverything') ?></span> <?php _e('compose-screen widget to help you write better. 
 	On this page you can customize each of these two features.','SearchEverything') ?></p>
 	</div>
@@ -16,7 +16,7 @@
 				<td><input type="checkbox" id="research_metabox" name="research_metabox" value="yes" <?php checked($options['se_research_metabox']['visible_on_compose']); ?> /></td>
 				</tr>
 				<tr scope="row"><td><?php _e('Enable search results from the web on compose screen','SearchEverything')?><br>
-				<small>(This will help you research similar posts. <a href="http://www.zemanta.com/blog/?p=24705" target="_blank">Learn more.</a>)</small></td>
+				<small>(This will help you research similar posts. <a href="http://www.zemanta.com/blog/research-everything/" target="_blank">Learn more.</a>)</small></td>
 	 <td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /><span class="se-zem-color">&lt;&dash; Try me. ;)</span></td>
 				</tr>
 				<tr scope="row"><td><?php _e('Zemanta api key','SearchEverything')?><br>

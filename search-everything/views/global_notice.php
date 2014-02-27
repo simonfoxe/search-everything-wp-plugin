@@ -3,7 +3,7 @@
 	<h3><?php echo $notice['title']; ?></h3>
 	<p class="se-about-description"><?php echo $notice['message']; ?></p>
 	<div class="se-logo">
-		<a href="http://www.zemanta.com" target="_blank"><img src="<?php echo (SE_PLUGIN_URL . '/static/img/zem-logo.png'); ?>" /></a>
+		<a href="<?php echo SE_ZEMANTA_LOGO_URL; ?>" target="_blank"><img src="<?php echo (SE_PLUGIN_URL . '/static/img/zem-logo.png'); ?>" /></a>
 	</div>
 </div>
 

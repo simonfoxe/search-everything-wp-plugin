@@ -31,6 +31,9 @@ if (!defined('SE_ZEMANTA_DASHBOARD_URL'))
 if (!defined('SE_ZEMANTA_PREFS_URL'))
 	define('SE_ZEMANTA_PREFS_URL', 'http://prefs.zemanta.com/api/get-sfid/');
 
+if (!defined('SE_ZEMANTA_LOGO_URL'))
+	define('SE_ZEMANTA_LOGO_URL', 'http://www.zemanta.com');
+
 if (!defined('SE_PREFS_STATE_FOUND')) {
 	define('SE_PREFS_STATE_FOUND', 1);
 	define('SE_PREFS_STATE_FAILED', -2);
@@ -906,8 +909,6 @@ function se_post_publish_ping($post_id) {
 		));
 
 		$status = json_decode($zemanta_response['body'])->status;
-		trigger_error($status);
-
 	}
 }
 
