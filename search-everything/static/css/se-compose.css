@@ -23,7 +23,7 @@
 
 #postbox-container-1 #se-metabox-results .se-no-results {margin:10px;text-align:left;}
 #postbox-container-1 #se-metabox-results .se-metabox-results-list {display:none;}
-#postbox-container-1 #se-metabox-results .se-metabox-results-list h4 {font-size:14px;margin:5px 0 0 10px;}
+#postbox-container-1 #se-metabox-results .se-metabox-results-list h4 {font-size:14px;margin:5px 0 5px 10px;}
 #postbox-container-1 #se-metabox-results .se-metabox-results-list ul li {display:block;margin:5px;width:auto;}
 
 #se-metabox-results .se-metabox-results-list.se-hidden ul {overflow:hidden;height:0;opacity:0;}
