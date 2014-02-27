@@ -135,6 +135,7 @@ function se_migrate_7_0_4() {
 	update_option('se_meta',$se_meta);
 	update_option('se_options',$se_options);
 
+	se_set_global_notice();
 }
 
 function se_migrate_7_0_3() {
