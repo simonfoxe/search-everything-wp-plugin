@@ -13,7 +13,7 @@ Class se_admin {
 		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_scripts_and_styles'));
 		add_action( 'admin_menu', array(&$this, 'se_add_options_panel'));
 
-		if (!empty($options['se_research_widget']['visible_on_compose'])) {
+		if (!empty($options['se_research_metabox']['visible_on_compose'])) {
 			add_action( 'add_meta_boxes', array(&$this,'se_meta_box_add' ));
 		}
 
