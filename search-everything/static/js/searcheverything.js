@@ -90,7 +90,7 @@ var SearchEverything = (function ($) {
 							externalResults = $('#se-metabox-external-results'),
 							externalResultsList = externalResults.find('ul');
 						if (!window.externalSearchEnabled) {
-							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Power Search</h4><p>If you want to use power search, you need to enable it in you <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
+							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>External Search</h4><p>If you want to use external search, you need to enable it in your <a href="options-general.php?page=extend_search"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
 						} else {
 							if (data.external.length === 0) {
