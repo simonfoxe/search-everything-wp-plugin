@@ -123,6 +123,8 @@ var SearchEverything = (function ($) {
 						}
 					},
 					error: function (xhr) {
+						$('.se-spinner, .se-no-results').remove();
+						$('#se-metabox-results').append('<p class="se-no-results">There was something wrong with the search. Please try again. If this happens a lot, please check out our <a href="http://wordpress.org/support/plugin/search-everything" target="_blank">Support forum</a>.</p>');
 
 					}
 				});
