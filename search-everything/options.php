@@ -6,12 +6,16 @@ Class se_admin {
 		// Load language file
 		$locale = get_locale();
 		$meta = se_get_meta();
+		$options = se_get_options();
 		if ( !empty($locale) )
 			load_textdomain('SearchEverything', SE_PLUGIN_DIR .'lang/se-'.$locale.'.mo');
 
 		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_scripts_and_styles'));
 		add_action( 'admin_menu', array(&$this, 'se_add_options_panel'));
-		add_action( 'add_meta_boxes', array(&$this,'se_meta_box_add' ));
+
+		if (!empty($options['se_research_widget']['visible_on_compose'])) {
+			add_action( 'add_meta_boxes', array(&$this,'se_meta_box_add' ));
+		}
 
 		if ( isset( $_GET['se_notice'] ) && 0 == $_GET['se_notice'] ) {
 			$meta['show_options_page_notice'] = false;
