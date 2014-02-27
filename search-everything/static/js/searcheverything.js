@@ -36,16 +36,26 @@ var SearchEverything = (function ($) {
 						return;
 					}
 					count += 1;
+					listItem.data(result);
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
-					listItem.find('p').text($('<div>' + result.post_content.replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 150) || 'No excerpt');
+					listItem.find('p').text(r.extractText(listItem, 'post_content'));
 					listItem.find('span').text(r.urlDomain(result.guid));
-					listItem.data(result);
 
 					holder.append(listItem);
 				});
 
 				return count;
+			},
+			extractText: function (listItem, dataField) {
+				var temp = $('<div>' + listItem.data(dataField) + '</div>').text();
+
+				if (!temp || temp.length === 0) {
+					temp = 'No Excerpt';
+				} else if (temp.length > 100) {
+					temp = temp.substring(0, 100) + '…';
+				}
+				return temp;
 			},
 			displayExternalResults: function (holder, data) {
 				var count = 0;
@@ -56,11 +66,11 @@ var SearchEverything = (function ($) {
 						return;
 					}
 					count += 1;
+					listItem.data(result);
 
 					listItem.find('h6').text(result.title || 'Title missing');
-					listItem.find('p').text($('<div>' + result.text_preview + '</div>').text().substring(0, 150) || 'No excerpt');
+					listItem.find('p').text(r.extractText(listItem, 'text_preview'));
 					listItem.find('span').text(r.urlDomain(result.url));
-					listItem.data(result);
 
 					holder.append(listItem);
 				});
@@ -179,7 +189,7 @@ var SearchEverything = (function ($) {
 					} else {
 						insertHtml.find('.se-box-heading-title').text(listItem.data('post_title') || 'Title missing'.substring(0, 50));
 						insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('guid')) + ')');
-						insertHtml.find('.se-box-text').text($('<div>' + listItem.data('post_content').replace(/\[.*?\]\s?/g, '') + '</div>').text().substring(0, 100) || 'No excerpt');
+						insertHtml.find('.se-box-text').text(r.extractText(listItem, 'post_content'));
 						insertHtml.find('.se-box-date').text(date);
 						insertHtml.find('.se-box-domain').text(r.urlDomain(listItem.data('guid')));
 						insertHtml.find('.se-box').attr('href', listItem.data('guid'));
@@ -211,7 +221,7 @@ var SearchEverything = (function ($) {
 					} else {
 						insertHtml.find('.se-box-heading-title').text(listItem.data('title') || 'Title missing'.substring(0, 50));
 						insertHtml.find('.se-box-heading-domain').text('(' + r.urlDomain(listItem.data('article_id')) + ')');
-						insertHtml.find('.se-box-text').text($('<div>' + listItem.data('text_preview') + '</div>').text().substring(0, 100) || 'No excerpt');
+						insertHtml.find('.se-box-text').text(r.extractText(listItem, 'text_preview'));
 						insertHtml.find('.se-box-date').text(date);
 						insertHtml.find('.se-box-domain').text(r.urlDomain(listItem.data('url')));
 						insertHtml.find('.se-box').attr('href', listItem.data('url'));
