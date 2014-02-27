@@ -35,15 +35,15 @@ Class se_admin {
 	 * Register style sheet.
 	 */
 	function se_register_plugin_scripts_and_styles() {
-		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/static/css/admin.css', SE_VERSION );
+		wp_register_style( 'search-everything', SE_PLUGIN_URL . '/static/css/admin.css', array(), SE_VERSION );
 		wp_enqueue_style( 'search-everything' );
 
-		add_editor_style(SE_PLUGIN_URL . '/static/css/se-styles.css', SE_VERSION);
+		add_editor_style(SE_PLUGIN_URL . '/static/css/se-styles.css', array(), SE_VERSION);
 
-		wp_register_style( 'search-everything-compose', SE_PLUGIN_URL . '/static/css/se-compose.css', SE_VERSION );
+		wp_register_style( 'search-everything-compose', SE_PLUGIN_URL . '/static/css/se-compose.css', array(), SE_VERSION );
 		wp_enqueue_style( 'search-everything-compose' );
 
-		wp_register_script( 'search-everything', SE_PLUGIN_URL . '/static/js/searcheverything.js', SE_VERSION);
+		wp_register_script( 'search-everything', SE_PLUGIN_URL . '/static/js/searcheverything.js', array(), SE_VERSION );
 		wp_enqueue_script('search-everything');
 	}
 
