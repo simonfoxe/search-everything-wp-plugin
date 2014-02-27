@@ -247,7 +247,8 @@
 		<tr valign="middle">
 			<td class="thanks">
 				<p>
-					[Blog post summary]
+					Today we are proud to announce our first major update to the <a target="_blank" href="http://wordpress.org/plugins/search-everything/">Search Everything plugin</a>, which gives the blogger advanced search functionality while they write.
+The <span class="se-name">Search Everything</span> writing helper enable you to link to what you’ve written in the past, has great SEO benefits, and is a powerful tool to keep visitors on your site longer. All you have to do to insert the link is click on the results, and a “vest pocket” will be added into your post where your cursor was.
 				</p>
 				<p>
 					<strong><?php _e('LOCALIZATION SUPPORT:', 'SearchEverything'); ?></strong><br />
