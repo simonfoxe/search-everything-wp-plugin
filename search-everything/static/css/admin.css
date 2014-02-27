@@ -13,8 +13,8 @@
 #se-top-notice {width:80%; position:relative;}
 #se-top-notice .updated {margin:0;}
 
-#se-description {background-color:#fff;font-size: 14px;padding: 10px 10px 10px 10px;}
-#se-description p{ font-size:16px;}
+#se-description {background-color:#fff;font-size: 14px;}
+#se-description p{ font-size:16px;padding: 15px 10px 15px 10px;}
 .se-name {font-weight:bold; color:#F58520;}
 .se-zem-color{color:#F58520;}
 #se-research-settings td { vertical-align: middle; }
@@ -47,6 +47,10 @@
 }
 #wpwrap #wpcontent .se-updated .se-logo img {
 	width: 90px;
+}
+
+#se-research-settings small, #se-basic-settings small, #se-advanced-settings small, #se-test-search small, #se-info small {
+	font-size: 11px;
 }
 
 
