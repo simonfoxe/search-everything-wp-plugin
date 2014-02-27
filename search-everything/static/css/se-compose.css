@@ -3,6 +3,7 @@
 #se-metabox-form {letter-spacing:-4px;}
 #se-metabox-form input {display:inline-block;letter-spacing:normal;word-spacing:normal;padding:5px 3px 5px 10px;margin:0;border:none;vertical-align:top;}
 #se-metabox-form a {text-indent:-9999em;cursor:pointer;background:transparent url(../img/search.png) -2px -3px no-repeat;display:inline-block;vertical-align:top;letter-spacing:normal;word-spacing:normal;width:20px;height:25px;}
+.branch-3-8 #se-metabox-form a, .branch-3-9 #se-metabox-form a {background:transparent url(../img/search.png) -2px -1px no-repeat;width:20px;height:29px;}
 
 #se-metabox-results {border-top:1px solid #dfdfdf;max-height:400px;overflow-y:scroll;}
 #se-metabox-results .se-spinner {margin:20px auto;width:32px;height:32px;background:transparent url(../img/ajax-loader.gif) top left no-repeat;}
