@@ -131,7 +131,7 @@ var SearchEverything = (function ($) {
 				input.on('keypress', function (ev) {
 					if (13 === ev.which) {
 						ev.preventDefault(); // Don't actually post... that would be silly
-						if (!input.data('apiKey')) {
+						if (input.prop('value') !== '') {
 							r.performSearch();
 						}
 					}
@@ -139,7 +139,7 @@ var SearchEverything = (function ($) {
 
 				$('#se-metabox-search').on('click', function (ev) {
 					ev.preventDefault(); // Don't actually go to another page... that would be destructive
-					if (!input.data('apiKey')) {
+					if (input.prop('value') !== '') {
 						r.performSearch();
 					}
 				});
