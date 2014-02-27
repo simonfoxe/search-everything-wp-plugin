@@ -837,7 +837,7 @@ add_action('wp_ajax_search_everything', 'search_everything_callback');
 
 function search_everything_callback() {
 	$is_query = !empty($_GET['s']);
-
+	$result = array();
 	if ($is_query) {
 		$result = array(
 			'own' => array(),
