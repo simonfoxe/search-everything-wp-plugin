@@ -64,6 +64,25 @@ function se_admin_head() {
 
 add_action('admin_head', 'se_admin_head');
 
+function se_global_notice() {
+	global $pagenow, $se_global_notice_pages;
+	
+	$se_meta = se_get_meta();
+
+	$close_url = admin_url( 'options-general.php' );
+	$close_url = add_query_arg( array(
+		'page' => 'extend_search',
+		'se_global_notice' => 0,
+	), $close_url );
+
+	$notice = $se_meta['se_global_notice'];
+	
+	if ($notice && in_array($pagenow, $se_global_notice_pages)) {
+		include(se_get_view('global_notice'));
+	}
+}
+add_action('all_admin_notices', 'se_global_notice' );
+
 class SearchEverything {
 
 	var $logging = false;

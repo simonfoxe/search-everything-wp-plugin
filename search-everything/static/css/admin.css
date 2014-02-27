@@ -18,3 +18,35 @@
 .se-name {font-weight:bold; color:#F58520;}
 .se-zem-color{color:#F58520;}
 #se-research-settings td { vertical-align: middle; }
+
+#wpwrap #wpcontent .se-updated {
+	position: relative;
+	margin: 5px 0 15px;
+	padding: 1px 12px;
+	background-color: #fff;
+	border-left: 4px solid #f58520;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+#wpwrap #wpcontent .se-updated p {
+	font-size: 1.3em;
+}
+#wpwrap #wpcontent .se-updated p a {
+	color: inherit;
+	text-decoration: underline;
+}
+#wpwrap #wpcontent .se-updated .se-logo {
+	position: absolute;
+	bottom: 10px;
+	right: 15px;
+}
+#wpwrap #wpcontent .se-updated .se-dismiss {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+}
+#wpwrap #wpcontent .se-updated .se-logo img {
+	width: 90px;
+}
+
+
