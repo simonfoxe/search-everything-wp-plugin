@@ -451,7 +451,7 @@ class SearchEverything {
 		$s = $vars['s'];
 		$search_terms = $this->se_get_search_terms();
 		$exact = isset( $vars['exact'] ) ? $vars['exact'] : '';
-
+		$search = '';
 		if ( !empty( $search_terms ) ) {
 			// Building search query on comments content
 			$n = ( $exact ) ? '' : '%';
@@ -863,11 +863,8 @@ function search_everything_callback() {
 			'text' => $_GET['text']
 		));
 
-		if (!is_wp_error($zemanta_response)) {
+		if (!is_wp_error($zemanta_response) && $zemanta_response['response']['code'] === 200) {
 			$result['external'] = json_decode($zemanta_response['body'])->articles;
-		}
-		else {
-			trigger_error('bla');
 		}
 
 		$SE = new SearchEverything(true);
