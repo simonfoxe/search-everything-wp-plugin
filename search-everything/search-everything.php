@@ -909,8 +909,6 @@ function se_post_publish_ping($post_id) {
 		));
 
 		$status = json_decode($zemanta_response['body'])->status;
-		trigger_error($status);
-
 	}
 }
 
