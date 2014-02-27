@@ -1,8 +1,10 @@
 <?php
 
-global $se_options, $se_meta;
+global $se_options, $se_meta, $se_global_notice_pages;
 $se_options = false;
 $se_meta = false;
+
+$se_global_notice_pages = array('plugins.php', 'index.php', 'update-core.php');
 
 $se_response_messages = array(
 	SE_PREFS_STATE_NOT_ENGLISH => __('Your blog is not in English', 'SearchEverything'),
@@ -72,6 +74,21 @@ function se_update_options($new_options) {
 	return $r;
 }
 
+function se_set_global_notice() {
+	$url = admin_url( 'options-general.php' );
+	$url = add_query_arg( array(
+		'page' => 'extend_search',
+		'se_global_notice' => 0,
+	), $url );
+	
+	$se_meta = se_get_meta();
+	$se_meta['se_global_notice'] = array(
+		'title' => 'Search everything has been updated with security fixes!',
+		'message' => 'Search Everything has been upgraded with security updates and some exciting new features. Visit <a href="'.$url.'">settings</a> to learn more.'
+	);
+	se_update_meta($se_meta);
+}
+
 //we have to be careful, as previously version was not stored in the options!
 function se_upgrade() {
 	$se_meta = get_option('se_meta', false);
@@ -113,6 +130,7 @@ function se_migrate_7_0_4() {
 		'external_search_enabled'	=> false,
 		'notice_visible'			=> true,
 		);
+	$meta['show_options_page_notice'] = false;
 
 	update_option('se_meta',$se_meta);
 	update_option('se_options',$se_options);
@@ -213,13 +231,14 @@ function se_install() {
 		'new_user' => true,
 		'name' => '',
 		'email' => '',
-		'show_options_page_notice'	=> true
+		'show_options_page_notice'	=> false
 	);
 	$se_options = se_get_default_options();
 
 	update_option('se_meta', $se_meta);
 	update_option('se_options', $se_options);
 
+	se_set_global_notice();
 }
 
 function se_get_default_options() {

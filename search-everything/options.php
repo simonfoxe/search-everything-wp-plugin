@@ -20,6 +20,11 @@ Class se_admin {
 		if ( $meta['show_options_page_notice'] ) {
  			add_action( 'all_admin_notices', array( &$this, 'se_options_page_notice' ) );
  		}
+
+		if ( isset( $_GET['se_global_notice'] ) && 0 == $_GET['se_global_notice']) {
+			$meta['se_global_notice'] = null;
+			se_update_meta($meta);
+		}
 	}
 
 	/**
