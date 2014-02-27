@@ -54,7 +54,7 @@ Class se_admin {
 		wp_nonce_field('se-meta-box-nonce', 'meta_box_nonce');
 		?>
 		<div id="se-metabox-form">
-			<input data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>" type="search" placeholder="Search interesting stuff" name="se-metabox-text" id="se-metabox-text" value="" />
+			<input placeholder="Type search here" data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>" type="search" placeholder="Search interesting stuff" name="se-metabox-text" id="se-metabox-text" value="" />
 			<a id="se-metabox-search">Search</a>
 		</div>
 		<?php	

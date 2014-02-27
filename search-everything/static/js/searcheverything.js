@@ -31,7 +31,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><span></span><p></p></a></li>');
+					var listItem = $('<li><a title="Click to insert link into post."><h6></h6><span></span><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
@@ -51,7 +51,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Insert a link to this post"><h6></h6><span></span><p></p></a></li>');
+					var listItem = $('<li><a title="Click to insert link into post."><h6></h6><span></span><p></p></a></li>');
 					if (i > 4) {
 						return;
 					}
@@ -69,7 +69,7 @@ var SearchEverything = (function ($) {
 			},
 			performSearch: function () {
 				var input = $('#se-metabox-text'),
-					results = $('<div id="se-metabox-results"><div id="se-metabox-external-results" class="se-metabox-results-list se-hidden"><h4>Results from around the web</h4><ul></ul></div><div id="se-metabox-own-results" class="se-metabox-results-list"><h4>Results from your blog</h4><ul></ul></div><div class="se-spinner"></div></div>'),
+					results = $('<div id="se-metabox-results"><div id="se-metabox-external-results" class="se-metabox-results-list se-hidden"><h4>Results from around the web</h4><p class="se-instructions">Click to insert link into post.</p><ul></ul></div><div id="se-metabox-own-results" class="se-metabox-results-list"><h4>Results from your blog</h4><p class="se-instructions">Click to insert link into post.</p><ul></ul></div><div class="se-spinner"></div></div>'),
 					count = 0;
 
 				$('#se-metabox-results').remove();

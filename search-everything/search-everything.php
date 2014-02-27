@@ -880,6 +880,7 @@ function se_post_publish_ping($post_id) {
 			'method' => 'zemanta.post_published_ping',
 			'current_url' => $permalink,
 			'post_url' => $permalink,
+			'post_rid' => '',
 			'interface' => 'wordpress-se',
 			'deployment' => 'search-everything',
 			'format' => 'json'
