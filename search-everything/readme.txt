@@ -89,7 +89,8 @@ Please open a new issue at [github Issues](https://github.com/zemanta/search-eve
 == Screenshots ==
 
 1. Screenshot of the options panel
-
+2. Screenshot of the writing helper Research Everything
+3. Screenshot of a post with inserted articles from the Research Everything writing helper
 
 
 == Changelog ==
