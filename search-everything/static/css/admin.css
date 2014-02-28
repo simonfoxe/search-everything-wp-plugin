@@ -10,6 +10,7 @@
 .se-submit {text-align: right;}
 .se-col {width:350px;}
 .se-suboption label { font-size: smaller;margin-left:10px; color:#666;}
+p span.se-thank-you {font-size: large; font-weight: bold;}
 
 #se-top-notice {width:80%; position:relative;}
 #se-top-notice .updated {margin:0;}
