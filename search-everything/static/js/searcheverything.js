@@ -31,7 +31,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Click to insert link into post."><h6></h6><span></span><p></p></a></li>');
+					var listItem = $('<li><div title="Click to insert link into post."><h6></h6><a href="" target="_blank"></a><p></p></div></li>');
 					if (i > 4) {
 						return;
 					}
@@ -40,7 +40,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text(r.extractText(listItem, 'post_content'));
-					listItem.find('span').text(r.urlDomain(result.guid));
+					listItem.find('a').text(r.urlDomain(result.guid)).prop('href', result.guid);
 
 					holder.append(listItem);
 				});
@@ -61,7 +61,7 @@ var SearchEverything = (function ($) {
 				var count = 0;
 
 				$.each(data, function (i, result) {
-					var listItem = $('<li><a title="Click to insert link into post."><h6></h6><span></span><p></p></a></li>');
+					var listItem = $('<li><div title="Click to insert link into post."><h6></h6><a href="" target="_blank"></a><p></p></div></li>');
 					if (i > 4) {
 						return;
 					}
@@ -70,7 +70,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.title || 'Title missing');
 					listItem.find('p').text(r.extractText(listItem, 'text_preview'));
-					listItem.find('span').text(r.urlDomain(result.url));
+					listItem.find('a').text(r.urlDomain(result.url)).prop('href', result.url);
 
 					holder.append(listItem);
 				});
@@ -182,6 +182,10 @@ var SearchEverything = (function ($) {
 						}()),
 						inserted = $('a.se-box[href="' + listItem.data('guid') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
 
+					if ($(ev.target).prop('tagName') === 'A') {
+						return;
+					}
+
 					if (inserted.length) {
 						if (inserted.parent().prop("tagName") === 'P') {
 							inserted.closest('p').remove();
@@ -213,6 +217,10 @@ var SearchEverything = (function ($) {
 							return r.months[actualDate.getMonth()] + ' ' + actualDate.getDate() + ' ' + actualDate.getFullYear();
 						}()),
 						inserted = $('a.se-box[href="' + listItem.data('url') + '"]', tinyMCE && tinyMCE.activeEditor.contentWindow.document || document);
+
+					if ($(ev.target).prop('tagName') === 'A') {
+						return;
+					}
 
 					if (inserted.length) {
 						if (inserted.parent().prop("tagName") === 'P') {
