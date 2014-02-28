@@ -81,7 +81,7 @@ function se_set_global_notice() {
 		'se_global_notice' => 0,
 	), $url );
 	
-	$se_meta = se_get_meta();
+	$se_meta = get_option('se_meta', false);
 	$se_meta['se_global_notice'] = array(
 		'title' => 'Search everything has been updated with security fixes!',
 		'message' => 'Search Everything has been upgraded with security updates and some exciting new features. Visit <a href="'.$url.'">settings</a> to learn more.'
@@ -130,7 +130,7 @@ function se_migrate_7_0_4() {
 		'external_search_enabled'	=> false,
 		'notice_visible'			=> true,
 		);
-	$meta['show_options_page_notice'] = false;
+	$se_meta['show_options_page_notice'] = false;
 
 	update_option('se_meta',$se_meta);
 	update_option('se_options',$se_options);
