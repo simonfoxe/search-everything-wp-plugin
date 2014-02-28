@@ -7,7 +7,7 @@ $se_meta = false;
 $se_global_notice_pages = array('plugins.php', 'index.php', 'update-core.php');
 
 $se_response_messages = array(
-	SE_PREFS_STATE_NOT_ENGLISH => __('Your blog is not in English', 'SearchEverything'),
+	SE_PREFS_STATE_NOT_ENGLISH => __('<a href="http://support.zemanta.com/customer/portal/articles/674752-which-languages-does-zemanta-support" target="_blank">Your blog is not in English</a>', 'SearchEverything'),
 	SE_PREFS_STATE_EMPTY => __('Your blog feed is empty', 'SearchEverything'),
 	SE_PREFS_STATE_FAILED => __('Unable to reslove URL to a source feed' , 'SearchEverything'),
 	SE_PREFS_STATE_FOUND => __('You are connected to Zemanta network', 'SearchEverything')
