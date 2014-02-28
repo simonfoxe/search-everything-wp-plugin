@@ -96,6 +96,8 @@ Please open a new issue at [github Issues](https://github.com/zemanta/search-eve
 
 = 8.0 =
 * Added research widget on compose screen
+* Reorganized settings
+* Security updates
 
 = 7.0.4 =
 * Urgent bugfix - changed migration script
