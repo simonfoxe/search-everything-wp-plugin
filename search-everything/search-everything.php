@@ -863,7 +863,7 @@ function search_everything_callback() {
 			'text' => $_GET['text']
 		));
 
-		if (!is_wp_error($zemanta_response) && $zemanta_response['response']['code'] === 200) {
+		if (!is_wp_error($zemanta_response) && $zemanta_response['response']['code'] == 200) {
 			$result['external'] = json_decode($zemanta_response['body'])->articles;
 		}
 
@@ -883,7 +883,7 @@ function search_everything_callback() {
 		$post_query->reset_postdata();
 		
 	}
-	print json_encode($result);	
+	print json_encode($result);
 	die();
 }
 
