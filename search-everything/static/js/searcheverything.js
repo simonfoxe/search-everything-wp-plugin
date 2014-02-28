@@ -99,6 +99,8 @@ var SearchEverything = (function ($) {
 							ownResultsList = ownResults.find('ul'),
 							externalResults = $('#se-metabox-external-results'),
 							externalResultsList = externalResults.find('ul');
+
+						$('.se-spinner, .se-no-results').remove();
 						if (!window.externalSearchEnabled) {
 							ownResults.before('<div id="se-metabox-own-powersearch" class="se-metabox-results-list"><h4>Results from around the web</h4><p>If you want to use external search, you need to enable it in your <a class="se-settings-link" href="options-general.php?page=extend_search" target="_blank"><strong>settings</strong></strong></a>.</p></div>');
 							$('#se-metabox-own-powersearch').show();
@@ -111,8 +113,6 @@ var SearchEverything = (function ($) {
 								externalResults.find('h4').text(externalResults.find('h4').text() + ' (' + count + ')');
 							}
 						}
-
-						$('.se-spinner, .se-no-results').remove();
 						if (data.own.length === 0) {
 							$('#se-metabox-results').append('<p class="se-no-results">It seems we haven\'t found any results for search term <strong>' + input.prop('value') + ' on your blog</strong>.</p>');
 							externalResults.removeClass('se-hidden');
