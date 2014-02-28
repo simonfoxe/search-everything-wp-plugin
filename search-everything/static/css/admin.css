@@ -7,7 +7,7 @@
 #se-description,#se-basic-settings,#se-advanced-settings, #se-test-search, #se-info, #se-research-settings, .se-submit {margin-top: 20px;}
 #se-basic-settings .manage-column, #se-advanced-settings .manage-column, #se-research-settings .manage-column {font-weight:bold;}
 #se-description,#se-basic-settings.widefat, #se-advanced-settings.widefat,#se-test-search.widefat, #se-info.widefat, #se-research-settings, .se-submit {width:80%;}
-.se-submit {text-align: right;}
+.se-submit {text-align: left;}
 .se-col {width:350px;}
 .se-suboption label { font-size: smaller;margin-left:10px; color:#666;}
 p span.se-thank-you {font-size: large; font-weight: bold;}
