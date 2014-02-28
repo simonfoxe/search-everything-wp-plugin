@@ -40,7 +40,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.post_title || 'Title missing');
 					listItem.find('p').text(r.extractText(listItem, 'post_content'));
-					listItem.find('a').text(r.urlDomain(result.guid)).prop('href', result.guid);
+					listItem.find('a').text(r.urlDomain(result.guid)).prop('title', result.title || 'Title missing').prop('href', result.guid);
 
 					holder.append(listItem);
 				});
@@ -70,7 +70,7 @@ var SearchEverything = (function ($) {
 
 					listItem.find('h6').text(result.title || 'Title missing');
 					listItem.find('p').text(r.extractText(listItem, 'text_preview'));
-					listItem.find('a').text(r.urlDomain(result.url)).prop('href', result.url);
+					listItem.find('a').text(r.urlDomain(result.url)).prop('title', result.title || 'Title missing').prop('href', result.url);
 
 					holder.append(listItem);
 				});

@@ -16,7 +16,7 @@
 #se-metabox-results .se-metabox-results-list ul li div {display:block;}
 #se-metabox-results .se-metabox-results-list ul li div h6 {font-size:12px;font-weight:bold;margin:0;color:#3498db;}
 #se-metabox-results .se-metabox-results-list ul li div p {font-size:12px;line-height:15px;margin:0;color:#7f8c8d;}
-#se-metabox-results .se-metabox-results-list ul li div a {display:block;font-size:10px;margin:0 0 5px 0;color:#3498db;}
+#se-metabox-results .se-metabox-results-list ul li div a {display:inline-block;font-size:10px;margin:0 0 5px 0;color:#3498db;}
 #se-metabox-results .se-metabox-results-list p {margin:10px;}
 #se-metabox-results .se-metabox-results-list ul li:hover a h6 {color:#2980b9;text-decoration:underline;}
 #se-metabox-results .se-metabox-results-list ul li:hover a span {color:#2980b9;}
