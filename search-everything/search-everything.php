@@ -69,6 +69,9 @@ add_action('admin_head', 'se_admin_head');
 
 function se_global_notice() {
 	global $pagenow, $se_global_notice_pages;
+	if (!current_user_can('delete_users')) {
+		return;
+	}
 	
 	$se_meta = se_get_meta();
 
