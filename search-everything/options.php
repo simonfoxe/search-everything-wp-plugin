@@ -92,7 +92,6 @@ Class se_admin {
 	//build admin interface
 	function se_option_page() {
 		global $wpdb, $table_prefix, $wp_version;
-
 		$new_options = array(
 			'se_exclude_categories'		=> (isset($_POST['exclude_categories']) && !empty($_POST['exclude_categories'])) ? $_POST['exclude_categories'] : '',
 			'se_exclude_categories_list'		=> (isset($_POST['exclude_categories_list']) && !empty($_POST['exclude_categories_list'])) ? $_POST['exclude_categories_list'] : '',
@@ -139,6 +138,9 @@ Class se_admin {
 			$api_key = fetch_api_key();
 			$meta['api_key'] = $api_key;
 			se_update_meta($meta);
+		}
+		if ($options['se_research_metabox']['external_search_enabled'] && !empty($meta['api_key'])) {
+			se_get_prefs();
 		}
 
 		$response_messages = se_get_response_messages();
@@ -210,10 +212,10 @@ function api($arguments)
 	$meta = se_get_meta();
 
 	$api_key = $meta['api_key'] ? $meta['api_key'] : '';
-
+		  
 	$arguments = array_merge($arguments, array(
 		'api_key'=> $api_key
-		));
+	));
 
 	if (!isset($arguments['format']))
 	{
@@ -241,4 +243,13 @@ function get_sfid() {
 		}
 	}
 	return array(null, $response_state);
+}
+
+function se_get_prefs() {
+	$meta = se_get_meta();
+	$zemanta_response = api(array(
+		'method' => 'zemanta.preferences',
+		'format' => 'json',
+		'interface' => 'wordpress-se'
+	));
 }

@@ -64,8 +64,12 @@ function se_admin_head() {
 	$se_metabox = $se_options['se_research_metabox'];
 	include(se_get_view('admin_head'));
 }
-
 add_action('admin_head', 'se_admin_head');
+
+function se_global_head() {
+	include(se_get_view('global_head'));
+}
+add_action('wp_head', 'se_global_head');
 
 function se_global_notice() {
 	global $pagenow, $se_global_notice_pages;
@@ -136,6 +140,8 @@ class SearchEverything {
 			add_filter( 'the_title', array( &$this, 'se_postfilter' ), 11 );
 			add_filter( 'the_excerpt', array( &$this, 'se_postfilter' ), 11 );
 		}
+
+		
 	}
 
 	function search_hooks() {
@@ -870,6 +876,7 @@ function search_everything_callback() {
 			$result['external'] = json_decode($zemanta_response['body'])->articles;
 		}
 
+		
 		$SE = new SearchEverything(true);
 
 		if (!empty($_GET['exact'])) {
