@@ -857,7 +857,7 @@ function search_everything_callback() {
 			's' => $_GET['s']
 		);
 
-		$zemanta_response = api(array(
+		$zemanta_response = se_api(array(
 			'method' => 'zemanta.suggest',
 			'return_images' => 0,
 			'return_rich_objects' => 0,
@@ -910,7 +910,7 @@ function se_post_publish_ping($post_id) {
 	if( ( $_POST['post_status'] == 'publish' ) && ( $_POST['original_post_status'] != 'publish' ) ) {
 		$permalink = get_permalink($post_id);
 
-		$zemanta_response = api(array(
+		$zemanta_response = se_api(array(
 			'method' => 'zemanta.post_published_ping',
 			'current_url' => $permalink,
 			'post_url' => $permalink,

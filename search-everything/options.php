@@ -182,7 +182,7 @@ Class se_admin {
 */
 function fetch_api_key()
 {
-	$response = api(array(
+	$response = se_api(array(
 		'method' => 'zemanta.auth.create_user',
 		'partner_id' => 'wordpress-se'
 		));
@@ -207,7 +207,7 @@ function fetch_api_key()
 *
 * @param array $arguments Arguments to pass to the API
 */
-function api($arguments)
+function se_api($arguments)
 {
 	$meta = se_get_meta();
 
@@ -247,7 +247,7 @@ function get_sfid() {
 
 function se_get_prefs() {
 	$meta = se_get_meta();
-	$zemanta_response = api(array(
+	$zemanta_response = se_api(array(
 		'method' => 'zemanta.preferences',
 		'format' => 'json',
 		'interface' => 'wordpress-se'
