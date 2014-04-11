@@ -60,9 +60,9 @@ Installation Instructions:
 
 Read the installation guide. 
 
-= It *still* doesn't work (and you're certain there's a bug) =
+= It *still* doesn't work =
 
-Please open a new issue at [github Issues](https://github.com/zemanta/search-everything-wordpress-plugin/issues "Github Issues")
+Please stop by our support at the [Support page](http://wordpress.org/support/plugin/search-everything)
 
 = What Translations are included? =
 
