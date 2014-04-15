@@ -882,7 +882,7 @@ function search_everything_callback() {
 		if (!empty($_GET['exact'])) {
 			$params['exact'] = true;
 		}
-
+		$params["showposts"] = 5;
 		$post_query = new WP_query($params);
 
 		while ( $post_query->have_posts() ) {
