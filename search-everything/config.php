@@ -125,7 +125,7 @@ function se_migrate_7_0_4() {
 	$se_options = get_option('se_options', false);
 
 	//enable external search
-	$se_options['se_research_widget'] = array (
+	$se_options['se_research_metabox'] = array (
 		'visible_on_compose'		=> true,
 		'external_search_enabled'	=> false,
 		'notice_visible'			=> true,
