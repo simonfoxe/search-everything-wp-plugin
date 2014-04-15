@@ -1,14 +1,22 @@
 <?php
 
 Class se_admin {
+
+	function se_localization() {
+		trigger_error('localization');
+		trigger_error(dirname(plugin_basename( __FILE__ )) . '/lang/');
+		load_plugin_textdomain('SearchEverything', false, dirname(plugin_basename( __FILE__ )) . '/lang/');
+	}
 	
 	function se_admin() {
 		// Load language file
 		$locale = get_locale();
 		$meta = se_get_meta();
 		$options = se_get_options();
-		if ( !empty($locale) )
-			load_textdomain('SearchEverything', SE_PLUGIN_DIR .'lang/se-'.$locale.'.mo');
+
+		if ( !empty($locale) ) {
+			add_action('admin_init', array(&$this, 'se_localization'));
+		}
 
 		add_action( 'admin_enqueue_scripts', array(&$this,'se_register_plugin_scripts_and_styles'));
 		add_action( 'admin_menu', array(&$this, 'se_add_options_panel'));
