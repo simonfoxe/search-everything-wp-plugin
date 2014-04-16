@@ -73,7 +73,7 @@ add_action('wp_head', 'se_global_head');
 
 function se_global_notice() {
 	global $pagenow, $se_global_notice_pages;
-	if (!current_user_can('delete_users')) {
+	if (!current_user_can('manage_options')) {
 		return;
 	}
 	

@@ -62,7 +62,7 @@ Read the installation guide.
 
 = It *still* doesn't work =
 
-Please stop by our support at the [Support page](http://wordpress.org/support/plugin/search-everything)
+Please open a new support topic at our [Support page](http://wordpress.org/support/plugin/search-everything)
 
 = What Translations are included? =
 
