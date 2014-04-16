@@ -126,11 +126,13 @@ class SearchEverything {
 	function init() {
 		if ( current_user_can('manage_options') ) {
 			$SEAdmin = new se_admin();
-			// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
-			if (basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php") {
-				return true;
-			}
 		}
+		// Disable Search-Everything, because posts_join is not working properly in Wordpress-backend's Ajax functions
+		//(for example in wp_link_query from compose screen (article search when inserting links))
+		if (basename( $_SERVER["SCRIPT_NAME"] ) == "admin-ajax.php") {
+			return true;
+		}
+
 
 		$this->search_hooks();
 
@@ -140,12 +142,11 @@ class SearchEverything {
 			add_filter( 'the_title', array( &$this, 'se_postfilter' ), 11 );
 			add_filter( 'the_excerpt', array( &$this, 'se_postfilter' ), 11 );
 		}
-
-		
 	}
 
 	function search_hooks() {
 		//add filters based upon option settings
+		
 		if ( $this->options['se_use_tag_search'] || $this->options['se_use_category_search'] || $this->options['se_use_tax_search'] ) {
 			add_filter( 'posts_join', array( &$this, 'se_terms_join' ) );
 			if ( $this->options['se_use_tag_search'] ) {
@@ -796,7 +797,6 @@ class SearchEverything {
 			}
 			// build our final string
 			$on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
-
 			$join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
 		}
 		$this->se_log( "tags join: ".$join );
@@ -910,7 +910,6 @@ function se_post_publish_ping($post_id) {
 	$status = false;
 	if( ( $_POST['post_status'] == 'publish' ) && ( $_POST['original_post_status'] != 'publish' ) ) {
 		$permalink = get_permalink($post_id);
-
 		$zemanta_response = se_api(array(
 			'method' => 'zemanta.post_published_ping',
 			'current_url' => $permalink,

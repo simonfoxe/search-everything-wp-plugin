@@ -3,8 +3,6 @@
 Class se_admin {
 
 	function se_localization() {
-		trigger_error('localization');
-		trigger_error(dirname(plugin_basename( __FILE__ )) . '/lang/');
 		load_plugin_textdomain('SearchEverything', false, dirname(plugin_basename( __FILE__ )) . '/lang/');
 	}
 	
