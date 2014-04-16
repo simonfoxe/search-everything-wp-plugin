@@ -114,6 +114,24 @@ function se_upgrade() {
 	}
 }
 
+function se_migrate_8_0() {
+	$se_meta = get_option('se_meta', false);
+	$se_meta['version'] = '8.0';
+	update_option('se_meta',$se_meta);
+
+	$se_options = get_option('se_options', false);
+	if (empty($se_options['se_research_metabox'])) {
+		$se_options['se_research_metabox'] = array (
+			'visible_on_compose'		=> true,
+			'external_search_enabled'	=> false,
+			'notice_visible'			=> true,
+		);
+	}
+	update_option('se_options',$se_options);	
+
+	se_set_global_notice();
+}
+
 function se_migrate_7_0_4() {
 	$se_meta = get_option('se_meta', false);
 
@@ -134,8 +152,6 @@ function se_migrate_7_0_4() {
 
 	update_option('se_meta',$se_meta);
 	update_option('se_options',$se_options);
-
-	se_set_global_notice();
 }
 
 function se_migrate_7_0_3() {

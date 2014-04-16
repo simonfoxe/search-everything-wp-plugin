@@ -3,7 +3,7 @@ Contributors: zemanta
 Tags: search, search highlight, tag search, category search, category exclusion, comment search, page search, admin, seo, post filter
 Requires at least: 3
 Tested up to: 3.8.1
-Stable tag: 8.0
+Stable tag: 8.1
 
 Search Everything increases WordPress' default search functionality in three easy steps.
 
@@ -94,6 +94,15 @@ Please stop by our support at the [Support page](http://wordpress.org/support/pl
 
 
 == Changelog ==
+
+= 8.1 =
+* Fixed link search bug
+* Fixed number of results bug in Research Everything
+* Improving code robustness
+* Translation system fixes
+* Fixed upgrade bug
+* Renamed methods with overgeneral names
+* Admin notices only visible to admins
 
 = 8.0 =
 * Added research widget on compose screen
