@@ -907,6 +907,7 @@ add_action('wp_enqueue_scripts', 'se_enqueue_styles');
 
 function se_post_publish_ping($post_id) {
 	//should happen only on first publish
+	$status = false;
 	if( ( $_POST['post_status'] == 'publish' ) && ( $_POST['original_post_status'] != 'publish' ) ) {
 		$permalink = get_permalink($post_id);
 
@@ -919,9 +920,11 @@ function se_post_publish_ping($post_id) {
 			'deployment' => 'search-everything',
 			'format' => 'json'
 		));
-
-		$status = json_decode($zemanta_response['body'])->status;
+		if (!is_wp_error($zemanta_response)) {
+			$status = json_decode($zemanta_response['body'])->status;
+		}
 	}
+	return $status;
 }
 
 add_action( 'publish_post', 'se_post_publish_ping' );
