@@ -8,7 +8,7 @@ Author: Zemanta
 Author URI: http://www.zemanta.com
 */
 
-define('SE_VERSION', '8.0');
+define('SE_VERSION', '8.1');
 
 if (!defined('SE_PLUGIN_FILE'))
 	define('SE_PLUGIN_FILE', plugin_basename(__FILE__));

@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2><?php _e('Search Everything', 'SearchEverything'); ?> <?php _e('options','SearchEverything');?> (<?php _e('current version','SearchEverything') ?> <?php echo $meta['version']; ?>)</h2>
+	<h2><?php _e('Search Everything', 'SearchEverything'); ?> <?php _e('options','SearchEverything');?> (<?php _e('current version','SearchEverything') ?> <?php echo SE_VERSION; ?>)</h2>
 	<div id="se-description" class="widefat">
 		<p><span class="se-name"><?php _e('Search Everything', 'SearchEverything'); ?> </span><?php _e('is the most reliable and efficient search plugin for WordPress.
 	It improves the search results for your readers and comes with the','SearchEverything')?> <span class="se-name"><?php _e('Research Everything','SearchEverything') ?></span> <?php _e('compose-screen widget to help you write better.
