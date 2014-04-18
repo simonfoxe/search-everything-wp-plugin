@@ -38,7 +38,7 @@ Search Everything increases the ability of the default Wordpress Search, options
 * Search only approved comments
 * Search Every Draft
 * Search Every Excerpt
-* Search Every Attachment (post type)
+* Search Every Attachment (post type, not the content itself - check FAQ)
 * Search Every Custom Field (metadata)
 * Exclude Posts from search
 * Exclude Categories from search
@@ -51,14 +51,15 @@ Installation Instructions:
 2. Put the 'search-everything' directory into your wp-content/plugins/ directory.
 3. Go to the Plugins page in your WordPress Administration area and click 'Activate' next to Search Everything.
 4. Go to the Options >  Search Everything and configure your settings.
-5. That's it. You can search now.
+5. That's it. Enjoy searching.
 	
 	
 == Frequently Asked Questions ==
 
-= I don't get any results in research tool =
+= It doesn't search in my PDF/Word/Excel attachments =
 
-Are you using WordPress 3.6? Sorry, but research tool requires at least version 3.7. 
+We know, this is not a bug. It's not that easy to search through binary files.
+Anyway, if there's a will, there's a way. Just ask us for a workaround and we'll gladly help.
 
 = It doesn't work =
 
@@ -67,6 +68,11 @@ Read the installation guide.
 = It *still* doesn't work =
 
 Please open a new support topic at our [Support page](http://wordpress.org/support/plugin/search-everything)
+
+= I don't get any results in research tool =
+
+Are you using WordPress 3.6? Sorry, but research tool requires at least version 3.7. 
+
 
 = What Translations are included? =
 
@@ -103,12 +109,12 @@ Note: We changed some labels in settings, old translations might not work and ne
 
 = 8.1 =
 * Fixed link search bug
-* Fixed number of results bug in Research Everything
-* Improving code robustness
-* Translation system fixes
+* Fixed bug of limiting number of results in Research Everything
+* Improved code robustness
+* Fixed translation system
 * Fixed upgrade bug
-* Renamed methods with overgeneral names
-* Admin notices only visible to admins
+* Renamed methods with too generic names
+* Fixed admin notices - they're only visible to admins now
 
 = 8.0 =
 * Added research widget on compose screen
