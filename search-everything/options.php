@@ -85,7 +85,6 @@ Class se_admin {
 		
 		// if our current user can't edit this post, bail
 		if( !current_user_can( 'edit_post' ) ) return;
-		
 
 	}
 
@@ -94,13 +93,47 @@ Class se_admin {
 		add_options_page('Search', 'Search Everything', 'manage_options', 'extend_search', array(&$this, 'se_option_page'));
 	}
 
-
+	function se_validation($validation_rules) {
+		$regex = array(
+			"color" => "^(([a-z]+)|(#[0-9a-f]{2,6}))?$",
+			"numeric-comma" => "^(\d+(, ?\d+)*)?$"
+		);
+		$messages = array(
+			"numeric-comma" => __("incorrect format for field <strong>%s</strong>",'SearchEverything'),
+			"color" => __("field <strong>%s</strong>' should be a css color ('red' or '#abc123')",'SearchEverything')
+		);
+		$errors = array();
+		foreach($validation_rules as $field => $rule_name) {
+			$rule = $regex[$rule_name];
+			if(!preg_match("/$rule/", $_POST[$field])) {
+				$errors[$field] = $messages[$rule_name];
+			}
+		}
+		return $errors;
+	}
+		  
 	//build admin interface
 	function se_option_page() {
 		global $wpdb, $table_prefix, $wp_version;
-		
+		  
 		if($_POST) {
 			check_admin_referer('se-everything-nonce');
+			$errors = $this->se_validation(array(
+				"highlight_color" => "color",
+				"highlight_style" => "color",
+				"exclude_categories_list" => "numeric-comma",
+				"exclude_posts_list" => "numeric-comma"
+			));
+			if ($errors) {
+				$fields = array(
+					"highlight_color" => __('Highlight Background Color', 'SearchEverything'),
+					"highlight_style" => __('Full Highlight Style','SearchEverything'),
+					"exclude_categories_list" => __('Exclude Categories','SearchEverything'),
+					"exclude_posts_list" => __('Exclude some post or page IDs','SearchEverything')
+				);
+				include(se_get_view('options_page_errors'));
+				return;
+			}
 		}
 		  
 		$new_options = array(

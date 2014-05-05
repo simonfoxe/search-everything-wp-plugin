@@ -265,4 +265,9 @@ var SearchEverything = (function ($) {
 
 jQuery(function () {
 	SearchEverything.initialize();
+
+	jQuery("a.se-back").on('click', function (evt) {
+		evt.preventDefault();
+		window.history.back();
+	});
 });

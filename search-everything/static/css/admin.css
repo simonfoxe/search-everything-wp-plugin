@@ -37,3 +37,10 @@ p span.se-thank-you {font-size: large; font-weight: bold;}
 #wpwrap #wpcontent .se-updated .se-logo img {width: 90px;}
 #se-research-settings small, #se-basic-settings small, #se-advanced-settings small, #se-test-search small, #se-info small {font-size: 11px;}
 
+div.error.se-error-box {
+	margin: 5px 15px 2px 2px;
+}
+div.error.se-error-box ul {
+	list-style-type: disc;
+	padding-left: 20px;
+}
