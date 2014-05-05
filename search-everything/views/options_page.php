@@ -6,6 +6,7 @@
 	On this page you can customize each of these two features.','SearchEverything') ?></p>
 	</div>
 	<form method="post">
+		<?php wp_nonce_field('se-everything-nonce'); ?>
 		<table id="se-research-settings" class="widefat">
 				<tr class="title">
 					<th scope="col" class="manage-column se-col"><?php _e('Research Everything compose-screen widget', 'SearchEverything'); ?></th>

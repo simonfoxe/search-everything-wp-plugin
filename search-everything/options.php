@@ -98,6 +98,11 @@ Class se_admin {
 	//build admin interface
 	function se_option_page() {
 		global $wpdb, $table_prefix, $wp_version;
+		
+		if($_POST) {
+			check_admin_referer('se-everything-nonce');
+		}
+		  
 		$new_options = array(
 			'se_exclude_categories'		=> (isset($_POST['exclude_categories']) && !empty($_POST['exclude_categories'])) ? $_POST['exclude_categories'] : '',
 			'se_exclude_categories_list'		=> (isset($_POST['exclude_categories_list']) && !empty($_POST['exclude_categories_list'])) ? $_POST['exclude_categories_list'] : '',
