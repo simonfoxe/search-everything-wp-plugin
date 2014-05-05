@@ -109,6 +109,12 @@ function se_upgrade() {
 	}
 }
 
+function se_migrate_8_1() {
+	$se_meta = get_option('se_meta', false);
+	$se_meta['version'] = '8.1.1';
+	update_option('se_meta', $se_meta);
+}
+
 function se_migrate_8_0() {
 	$se_meta = get_option('se_meta', false);
 	$se_meta['version'] = '8.1';
