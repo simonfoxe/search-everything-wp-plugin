@@ -96,11 +96,13 @@ Class se_admin {
 	function se_validation($validation_rules) {
 		$regex = array(
 			"color" => "^(([a-z]+)|(#[0-9a-f]{2,6}))?$",
-			"numeric-comma" => "^(\d+(, ?\d+)*)?$"
+			"numeric-comma" => "^(\d+(, ?\d+)*)?$",
+			"css" => "^(([a-zA-Z-])+\ *\:[^;]+; *)+$"
 		);
 		$messages = array(
 			"numeric-comma" => __("incorrect format for field <strong>%s</strong>",'SearchEverything'),
-			"color" => __("field <strong>%s</strong>' should be a css color ('red' or '#abc123')",'SearchEverything')
+			"color" => __("field <strong>%s</strong>' should be a css color ('red' or '#abc123')",'SearchEverything'),
+			"css" => __("field <strong>%s</strong>' doesn't contain valid css",'SearchEverything')
 		);
 		$errors = array();
 		foreach($validation_rules as $field => $rule_name) {
@@ -120,7 +122,7 @@ Class se_admin {
 			check_admin_referer('se-everything-nonce');
 			$errors = $this->se_validation(array(
 				"highlight_color" => "color",
-				"highlight_style" => "color",
+				"highlight_style" => "css",
 				"exclude_categories_list" => "numeric-comma",
 				"exclude_posts_list" => "numeric-comma"
 			));
