@@ -101,8 +101,8 @@ Class se_admin {
 		);
 		$messages = array(
 			"numeric-comma" => __("incorrect format for field <strong>%s</strong>",'SearchEverything'),
-			"color" => __("field <strong>%s</strong>' should be a css color ('red' or '#abc123')",'SearchEverything'),
-			"css" => __("field <strong>%s</strong>' doesn't contain valid css",'SearchEverything')
+			"color" => __("field <strong>%s</strong> should be a css color ('red' or '#abc123')",'SearchEverything'),
+			"css" => __("field <strong>%s</strong> doesn't contain valid css",'SearchEverything')
 		);
 		$errors = array();
 		foreach($validation_rules as $field => $rule_name) {
