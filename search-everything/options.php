@@ -97,7 +97,7 @@ Class se_admin {
 		$regex = array(
 			"color" => "^(([a-z]+)|(#[0-9a-f]{2,6}))?$",
 			"numeric-comma" => "^(\d+(, ?\d+)*)?$",
-			"css" => "^(([a-zA-Z-])+\ *\:[^;]+; *)+$"
+			"css" => "^(([a-zA-Z-])+\ *\:[^;]+; *)*$"
 		);
 		$messages = array(
 			"numeric-comma" => __("incorrect format for field <strong>%s</strong>",'SearchEverything'),
