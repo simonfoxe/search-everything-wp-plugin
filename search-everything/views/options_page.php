@@ -16,7 +16,7 @@
 				<td><input type="checkbox" id="research_metabox" name="research_metabox" value="yes" <?php checked($options['se_research_metabox']['visible_on_compose']); ?> /></td>
 				</tr>
 				<tr scope="row"><td><?php _e('Enable search results from the web on compose screen','SearchEverything')?><br>
-				<small>(This will help you research similar posts. <a href="http://www.zemanta.com/blog/search-everything-for-wordpress-reborn-now-with-writing-helper/" target="_blank">Learn more.</a>)</small></td>
+				<small>(This will help you research similar posts. <a href="http://zem.si/1l7q5KS" target="_blank">Learn more.</a>)</small></td>
 	 <td><input type="checkbox" id="research_external_results" name="research_external_results" value="yes" <?php checked($options['se_research_metabox']['external_search_enabled']); ?> /><span class="se-zem-color">&lArr; Try me. ;)</span></td>
 				</tr>
 				<tr scope="row"><td><?php _e('Zemanta api key','SearchEverything')?><br>
