@@ -828,13 +828,13 @@ class SearchEverything {
 
 				if ( $highlight_color != '' )
 					$postcontent = preg_replace(
-						'"(?<!\<)(?<!\w)(\pL*'.$term.'\pL*)(?!\w|[^<>]*>)"i'
+						'"(?<!\<)(?<!\w)(\pL*'.$term.'\pL*)(?!\w|[^<>]*>)"iu'
 						, '<span class="search-everything-highlight-color" style="background-color:'.$highlight_color.'">$1</span>'
 						, $postcontent
 					);
 				else
 					$postcontent = preg_replace(
-						'"(?<!\<)(?<!\w)(\pL*'.$term.'\pL*)(?!\w|[^<>]*>)"i'
+						'"(?<!\<)(?<!\w)(\pL*'.$term.'\pL*)(?!\w|[^<>]*>)"iu'
 						, '<span class="search-everything-highlight" style="'.$highlight_style.'">$1</span>'
 						, $postcontent
 					);
