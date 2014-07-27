@@ -700,10 +700,10 @@ class SearchEverything {
 				}
 				$excl_list = implode( ',', $excluded_cat_list);
 				if ( $this->wp_ver23 ) {
-					$excludeQuery = " AND ( ctax.term_id NOT IN ( ".$excl_list." ))";
+					$excludeQuery = " AND ( ctax.term_id NOT IN ( ".$excl_list." ) OR (wp_posts.post_type IN ( 'page' )))";
 				}
 				else {
-					$excludeQuery = ' AND (c.category_id NOT IN ( '.$excl_list.' ))';
+					$excludeQuery = ' AND (c.category_id NOT IN ( '.$excl_list.' ) OR (wp_posts.post_type IN ( \'page\' )))';
 				}
 			}
 			$this->se_log( "ex category where: ".$excludeQuery );
