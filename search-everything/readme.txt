@@ -50,7 +50,7 @@ Installation Instructions:
 1. Download the plugin and unzip it.
 2. Put the 'search-everything' directory into your wp-content/plugins/ directory.
 3. Go to the Plugins page in your WordPress Administration area and click 'Activate' next to Search Everything.
-4. Go to the Options >  Search Everything and configure your settings.
+4. Go to the Settings >  Search Everything and configure plugin.
 5. That's it. Enjoy searching.
 	
 	
