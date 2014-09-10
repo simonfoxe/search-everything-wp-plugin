@@ -9,7 +9,6 @@ Search Everything increases WordPress' default search functionality in three eas
 
 
 == Update ==
-
 From Jan 24, 2014 Search Everything originaly developed by dancameron, sproutventure will be maintained and developed further by Zemanta.
 
 == Description ==
@@ -103,6 +102,7 @@ Note: We changed some labels in settings, old translations might not work and ne
 * Taiwan / Chinese
 
 = What about Terms of Service and Privacy policy? =
+
 Before using the plugin please read the full version of [Zemanta Terms of Service](http://www.zemanta.com/legal/terms-of-service/) and [Zemanta Privacy Policy](http://www.zemanta.com/legal/privacy/).
 
 
