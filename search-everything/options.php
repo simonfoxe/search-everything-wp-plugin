@@ -95,7 +95,7 @@ Class se_admin {
 
 	function se_validation($validation_rules) {
 		$regex = array(
-			"color" => "^(([a-z]+)|(#[0-9a-f]{2,6}))?$",
+			"color" => "^(([a-z]+)|(#[0-9a-fA-F]{2,6}))?$",
 			"numeric-comma" => "^(\d+(, ?\d+)*)?$",
 			"css" => "^(([a-zA-Z-])+\ *\:[^;]+; *)*$"
 		);
