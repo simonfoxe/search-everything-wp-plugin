@@ -504,8 +504,9 @@ class SearchEverything {
 				$comment_approved = "AND cmt.comment_approved =  '1'";
 				$search = "($search) $comment_approved";
 			}
-			if ( !empty( $search ) )
+			if ( !empty( $search ) ) {
 				$search = " OR ({$search}) ";
+			}
 		}
 		//$this->se_log( "comments where: ".$where );
 		$this->se_log( "comments sql: ".$search );
@@ -928,7 +929,10 @@ function se_post_publish_ping($post_id) {
 			'format' => 'json'
 		));
 		if (!is_wp_error($zemanta_response)) {
-			$status = json_decode($zemanta_response['body'])->status;
+			$json_response = json_decode($zemanta_response['body']);
+			if (is_object($json_response)) {
+				$status = $json_response->status;
+			}
 		}
 	}
 	return $status;
