@@ -905,12 +905,6 @@ function search_everything_callback() {
 	die();
 }
 
-function se_enqueue_styles() {
-	wp_enqueue_style('se-link-styles', SE_PLUGIN_URL . '/static/css/se-styles.css');
-}
-
-add_action('wp_enqueue_scripts', 'se_enqueue_styles');
-
 
 
 function se_post_publish_ping($post_id) {
