@@ -916,7 +916,7 @@ add_action('wp_enqueue_scripts', 'se_enqueue_styles');
 function se_post_publish_ping($post_id) {
 	//should happen only on first publish
 	$status = false;
-	if( ( $_POST['post_status'] == 'publish' ) && ( $_POST['original_post_status'] != 'publish' ) ) {
+	if( !empty( $_POST['post_status'] ) && ( $_POST['post_status'] == 'publish' ) && ( $_POST['original_post_status'] != 'publish' ) ) {
 		$permalink = get_permalink($post_id);
 		$zemanta_response = se_api(array(
 			'method' => 'zemanta.post_published_ping',
