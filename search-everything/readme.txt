@@ -84,6 +84,7 @@ Note: We changed some labels in settings, old translations might not work and ne
 * Arabic
 * Belarusian
 * China / Chinese
+* Czech
 * Dutch
 * French
 * German
@@ -118,6 +119,7 @@ Before using the plugin please read the full version of [Zemanta Terms of Servic
 = 8.1.4 =
 * Removed unnecessary styles on frontend
 * Fixed php notice showing up sometimes
+* Czech language added
 
 = 8.1.3 =
 * Support for multitag search
