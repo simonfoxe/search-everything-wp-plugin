@@ -2,7 +2,7 @@
 Contributors: zemanta
 Tags: search, search highlight, tag search, category search, category exclusion, comment search, page search, admin, seo, post filter, research
 Requires at least: 3.6
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: 8.1.4
 
 Search Everything increases WordPress' default search functionality in three easy steps.
