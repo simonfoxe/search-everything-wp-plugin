@@ -4,11 +4,13 @@ Plugin Name: Search Everything
 Plugin URI: http://wordpress.org/plugins/search-everything/
 Description: Adds search functionality without modifying any template pages: Activate, Configure and Search. Options Include: search highlight, search pages, excerpts, attachments, drafts, comments, tags and custom fields (metadata). Also offers the ability to exclude specific pages and posts. Does not search password-protected content.
 Version: 8.1.4
+Text Domain: search-everything
 Author: Zemanta
 Author URI: http://www.zemanta.com
 */
 
 define('SE_VERSION', '8.1.4');
+define('SE_LANG', 'search-everything');
 
 if (!defined('SE_PLUGIN_FILE'))
 	define('SE_PLUGIN_FILE', plugin_basename(__FILE__));

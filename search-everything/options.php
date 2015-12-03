@@ -3,7 +3,7 @@
 Class se_admin {
 
 	function se_localization() {
-		load_plugin_textdomain('SearchEverything', false, dirname(plugin_basename( __FILE__ )) . '/lang/');
+		load_plugin_textdomain(SE_LANG, false, dirname(plugin_basename( __FILE__ )) . '/lang/');
 	}
 	
 	function se_admin() {
@@ -100,9 +100,9 @@ Class se_admin {
 			"css" => "^(([a-zA-Z-])+\ *\:[^;]+; *)*$"
 		);
 		$messages = array(
-			"numeric-comma" => __("incorrect format for field <strong>%s</strong>",'SearchEverything'),
-			"color" => __("field <strong>%s</strong> should be a css color ('red' or '#abc123')",'SearchEverything'),
-			"css" => __("field <strong>%s</strong> doesn't contain valid css",'SearchEverything')
+			"numeric-comma" => __("incorrect format for field <strong>%s</strong>", SE_LANG),
+			"color" => __("field <strong>%s</strong> should be a css color ('red' or '#abc123')", SE_LANG),
+			"css" => __("field <strong>%s</strong> doesn't contain valid css",SE_LANG)
 		);
 		$errors = array();
 		foreach($validation_rules as $field => $rule_name) {
@@ -128,10 +128,10 @@ Class se_admin {
 			));
 			if ($errors) {
 				$fields = array(
-					"highlight_color" => __('Highlight Background Color', 'SearchEverything'),
-					"highlight_style" => __('Full Highlight Style','SearchEverything'),
-					"exclude_categories_list" => __('Exclude Categories','SearchEverything'),
-					"exclude_posts_list" => __('Exclude some post or page IDs','SearchEverything')
+					"highlight_color" => __('Highlight Background Color', SE_LANG),
+					"highlight_style" => __('Full Highlight Style', SE_LANG),
+					"exclude_categories_list" => __('Exclude Categories', SE_LANG),
+					"exclude_posts_list" => __('Exclude some post or page IDs', SE_LANG)
 				);
 				include(se_get_view('options_page_errors'));
 				return;
@@ -165,12 +165,12 @@ Class se_admin {
 
 
 		if(isset($_POST['action']) && $_POST['action'] == "save") {
-			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', 'SearchEverything') . "</p></div>";
+			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', SE_LANG) . "</p></div>";
 			se_update_options($new_options);
 		}
 
 		if(isset($_POST['action']) && $_POST['action'] == "reset") {
-			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', 'SearchEverything') . "</p></div>";
+			echo "<div class=\"updated fade\" id=\"limitcatsupdatenotice\"><p>" . __('Your default search settings have been <strong>updated</strong> by Search Everything. </p><p> What are you waiting for? Go check out the new search results!', SE_LANG) . "</p></div>";
 			$default_options = se_get_default_options();
 
 			se_update_options($default_options);
